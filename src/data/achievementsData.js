@@ -194,16 +194,6 @@ export const certificationGroups = [
           { title: 'Java Programming', grade: 'Completed', description: 'Core Java — OOP, collections, exception handling', verifyLink: '#' },
           { title: 'C and C++ Programming', grade: 'Completed', description: 'C and C++ fundamentals, pointers, and memory management', verifyLink: '#' }
         ]
-      },
-      {
-        id: 'other',
-        platform: 'Other',
-        coursesCount: 3,
-        certs: [
-          { title: 'Foundation in Programming and Data Science', grade: 'Foundation', description: 'Python, Statistics, and Data Science fundamentals — IIT Madras BS Degree', verifyLink: '#' },
-          { title: 'AI + Sustainability Virtual Internship', grade: 'Completed', description: 'AI applications for sustainable development goals — 1M1B', verifyLink: '#' },
-          { title: 'Art of Prompting', grade: 'Completed', description: 'Prompt engineering techniques for LLMs — IBM SkillBuild / ALX', verifyLink: '#' }
-        ]
       }
     ]
   }
