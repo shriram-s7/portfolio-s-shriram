@@ -193,31 +193,7 @@ export const certificationGroups = [
             }
         ]
     },
-    {
-        id: 'other',
-        platform: 'Other',
-        coursesCount: 3,
-        certs: [
-            {
-                title: 'Foundation in Programming and Data Science',
-                grade: 'Foundation',
-                description: 'Python, Statistics, and Data Science fundamentals — IIT Madras BS Degree',
-                verifyLink: '#'
-            },
-            {
-                title: 'AI + Sustainability Virtual Internship',
-                grade: 'Completed',
-                description: 'AI applications for sustainable development goals — 1M1B',
-                verifyLink: '#'
-            },
-            {
-                title: 'Art of Prompting',
-                grade: 'Completed',
-                description: 'Prompt engineering techniques for large language models — IBM SkillBuild / ALX',
-                verifyLink: '#'
-            }
-        ]
-    },
+
     {
         id: 'oracle',
         platform: 'Oracle',
