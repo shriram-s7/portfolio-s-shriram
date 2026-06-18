@@ -141,7 +141,7 @@ export const certificationGroups = [
     {
         id: 'aws',
         platform: 'AWS',
-        coursesCount: 4,
+        coursesCount: 8,
         certs: [
             {
                 title: 'Cloud Quest: Cloud Practitioner',
@@ -166,6 +166,30 @@ export const certificationGroups = [
                 grade: 'Completed',
                 description: 'Foundational GenAI and AWS AI/ML services',
                 verifyLink: '#'
+            },
+            {
+                title: 'AWS Practice Exam: Cloud Practitioner',
+                grade: 'Completed',
+                description: 'Official AWS practice exam completion for Cloud Practitioner certification track',
+                verifyLink: '#'
+            },
+            {
+                title: 'AWS Practice Exam: Solutions Architect',
+                grade: 'Completed',
+                description: 'Official AWS practice exam completion for Solutions Architect certification track',
+                verifyLink: '#'
+            },
+            {
+                title: 'AWS Practice Exam: Developer',
+                grade: 'Completed',
+                description: 'Official AWS practice exam completion for Developer certification track',
+                verifyLink: '#'
+            },
+            {
+                title: 'AWS Practice Exam: AI Practitioner',
+                grade: 'Completed',
+                description: 'Official AWS practice exam completion for AI Practitioner certification track',
+                verifyLink: '#'
             }
         ]
     },
@@ -177,19 +201,139 @@ export const certificationGroups = [
             {
                 title: 'Foundation in Programming and Data Science',
                 grade: 'Foundation',
-                description: 'Python, Statistics, and Data Science fundamentals',
+                description: 'Python, Statistics, and Data Science fundamentals — IIT Madras BS Degree',
                 verifyLink: '#'
             },
             {
                 title: 'AI + Sustainability Virtual Internship',
                 grade: 'Completed',
-                description: 'AI applications for sustainable development goals',
+                description: 'AI applications for sustainable development goals — 1M1B',
                 verifyLink: '#'
             },
             {
                 title: 'Art of Prompting',
                 grade: 'Completed',
-                description: 'Prompt engineering techniques for LLMs',
+                description: 'Prompt engineering techniques for large language models — IBM SkillBuild / ALX',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'oracle',
+        platform: 'Oracle',
+        coursesCount: 1,
+        certs: [
+            {
+                title: 'Oracle Certified Professional: Java SE 17 Developer',
+                grade: 'Certified',
+                description: 'Professional-level Java SE 17 certification covering OOP, streams, modules, and concurrency',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'google',
+        platform: 'Google Cloud',
+        coursesCount: 1,
+        certs: [
+            {
+                title: 'Introduction to Generative AI',
+                grade: 'Completed',
+                description: 'Foundational concepts of generative AI, large language models, and Google Cloud AI tools',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'cisco',
+        platform: 'Cisco NetAcad',
+        coursesCount: 6,
+        certs: [
+            {
+                title: 'Python Essentials',
+                grade: 'Completed',
+                description: 'Core Python programming concepts and scripting fundamentals',
+                verifyLink: '#'
+            },
+            {
+                title: 'Networking Basics',
+                grade: 'Completed',
+                description: 'Fundamentals of computer networking, protocols, and network architecture',
+                verifyLink: '#'
+            },
+            {
+                title: 'Introduction to Modern AI',
+                grade: 'Completed',
+                description: 'Overview of modern AI concepts, use cases, and ethical considerations',
+                verifyLink: '#'
+            },
+            {
+                title: 'Security and Connectivity Fundamentals',
+                grade: 'Completed',
+                description: 'Core concepts in cybersecurity, network security, and connectivity',
+                verifyLink: '#'
+            },
+            {
+                title: 'Analyze Customer Requirements',
+                grade: 'Completed',
+                description: 'Business analysis techniques for understanding and documenting customer needs',
+                verifyLink: '#'
+            },
+            {
+                title: 'Update Your Resume',
+                grade: 'Completed',
+                description: 'Professional resume writing and career development skills',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'ibm',
+        platform: 'IBM SkillBuild',
+        coursesCount: 2,
+        certs: [
+            {
+                title: 'AI and Sustainability',
+                grade: 'Completed',
+                description: 'Applying AI for sustainability challenges — 1M1B IBM SkillBuild program',
+                verifyLink: '#'
+            },
+            {
+                title: 'Mastering the Art of Prompt Engineering',
+                grade: 'Completed',
+                description: 'Advanced prompt engineering strategies for generative AI models',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'mongodb',
+        platform: 'MongoDB',
+        coursesCount: 1,
+        certs: [
+            {
+                title: 'MongoDB Basics for Students',
+                grade: 'Completed',
+                description: 'NoSQL database fundamentals, CRUD operations, and MongoDB Atlas',
+                verifyLink: '#'
+            }
+        ]
+    },
+    {
+        id: 'infosys',
+        platform: 'Infosys Springboard',
+        coursesCount: 2,
+        certs: [
+            {
+                title: 'Java Programming',
+                grade: 'Completed',
+                description: 'Core Java programming — OOP, collections, exception handling',
+                verifyLink: '#'
+            },
+            {
+                title: 'C and C++ Programming',
+                grade: 'Completed',
+                description: 'C and C++ language fundamentals, pointers, and memory management',
                 verifyLink: '#'
             }
         ]
