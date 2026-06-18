@@ -196,7 +196,7 @@ export const certificationGroups = [
 
     {
         id: 'oracle',
-        platform: 'Oracle',
+        platform: 'Oracle - GLOBAL CERTIFICATION',
         coursesCount: 1,
         certs: [
             {
