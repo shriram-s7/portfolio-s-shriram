@@ -23,8 +23,17 @@ interface CourseCert {
 interface CertificationGroup {
   id: string;
   platform: string;
-  coursesCount: number;
-  certs: CourseCert[];
+  coursesCount?: number;
+  certs?: CourseCert[];
+  highlight?: boolean;
+  highlightLabel?: string;
+  isNested?: boolean;
+  subGroups?: {
+    id: string;
+    platform: string;
+    coursesCount: number;
+    certs: CourseCert[];
+  }[];
 }
 
 // --- DATA ---
@@ -179,6 +188,7 @@ const Achievements = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           {certificationGroups.map((group) => {
             const isOpen = !!openGroups[group.id];
+            const coursesCount = group.coursesCount ?? group.subGroups?.reduce((acc, sub) => acc + sub.coursesCount, 0) ?? 0;
             return (
               <div 
                 key={group.id} 
@@ -189,10 +199,15 @@ const Achievements = () => {
                   onClick={() => toggleGroup(group.id)}
                   className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors focus:outline-none"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-4">
                     <span className="text-xl font-bold text-white tracking-wide">{group.platform}</span>
+                    {group.highlightLabel && (
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
+                        {group.highlightLabel}
+                      </span>
+                    )}
                     <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
-                      {group.coursesCount} courses
+                      {coursesCount} {coursesCount === 1 ? 'course' : 'courses'}
                     </span>
                   </div>
                   <div className={`p-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
@@ -204,43 +219,128 @@ const Achievements = () => {
                 <div
                   className="transition-all duration-500 ease-in-out overflow-hidden"
                   style={{
-                    maxHeight: isOpen ? '2000px' : '0px',
+                    maxHeight: isOpen ? '4000px' : '0px',
                     opacity: isOpen ? 1 : 0
                   }}
                 >
-                  <div className="p-6 pt-2 border-t border-white/5 bg-black/20">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {group.certs.map((cert, certIdx) => (
-                        <div
-                          key={certIdx}
-                          className="group/card relative flex flex-col justify-between p-6 rounded-xl border-l-[3px] border-l-[#06b6d4] border-t border-r border-b border-white/5 bg-[#0d1527]/60 hover:bg-[#0f1b33] transition-all duration-300 shadow-md hover:shadow-cyan-950/20"
-                        >
-                          <div>
-                            <div className="flex items-start justify-between gap-3 mb-3">
-                              <h4 className="font-bold text-lg text-white leading-snug group-hover/card:text-cyan-400 transition-colors">
-                                {cert.title}
-                              </h4>
-                              <span className="shrink-0 text-[10px] font-bold tracking-wider uppercase bg-cyan-400/10 text-cyan-400 px-2 py-0.5 rounded border border-cyan-400/20 font-mono">
-                                {cert.grade}
-                              </span>
-                            </div>
-                            <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                              {cert.description}
-                            </p>
-                          </div>
-                          <div>
-                            <a
-                              href={cert.verifyLink}
-                              className="inline-flex items-center gap-1 text-[#0d9488] hover:text-[#0f766e] text-xs font-bold tracking-wide transition-colors group/link"
+                  {group.isNested && group.subGroups ? (
+                    <div className="p-6 pt-2 border-t border-white/5 bg-black/20 space-y-4">
+                      {group.subGroups.map((subGroup) => {
+                        const isSubOpen = !!openGroups[subGroup.id];
+                        return (
+                          <div 
+                            key={subGroup.id}
+                            className="border border-white/5 rounded-xl bg-[#090d16]/20 overflow-hidden transition-all duration-300"
+                          >
+                            {/* Nested Header Row */}
+                            <button
+                              onClick={() => toggleGroup(subGroup.id)}
+                              className="w-full flex items-center justify-between p-4 pl-6 hover:bg-white/5 transition-colors focus:outline-none"
                             >
-                              Verify 
-                              <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
-                            </a>
+                              <div className="flex items-center gap-3">
+                                <span className="text-lg font-bold text-white/90 tracking-wide">{subGroup.platform}</span>
+                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
+                                  {subGroup.coursesCount} {subGroup.coursesCount === 1 ? 'course' : 'courses'}
+                                </span>
+                              </div>
+                              <div className={`p-1 rounded-full bg-white/5 border border-white/10 text-white/70 transition-transform duration-300 ${isSubOpen ? 'rotate-180' : ''}`}>
+                                <ChevronDown size={14} />
+                              </div>
+                            </button>
+
+                            {/* Nested Expanded Content */}
+                            <div
+                              className="transition-all duration-500 ease-in-out overflow-hidden"
+                              style={{
+                                maxHeight: isSubOpen ? '2000px' : '0px',
+                                opacity: isSubOpen ? 1 : 0
+                              }}
+                            >
+                              <div className="p-6 pt-2 border-t border-white/5 bg-black/10">
+                                <div className="grid md:grid-cols-2 gap-4">
+                                  {subGroup.certs.map((cert, certIdx) => (
+                                    <div
+                                      key={certIdx}
+                                      className="group/card relative flex flex-col justify-between p-5 rounded-xl border-l-[3px] border-l-[#06b6d4] border-t border-r border-b border-white/5 bg-[#0d1527]/40 hover:bg-[#0f1b33] transition-all duration-300 shadow-sm hover:shadow-cyan-950/10"
+                                    >
+                                      <div>
+                                        <div className="flex items-start justify-between gap-3 mb-2">
+                                          <h4 className="font-bold text-base text-white leading-snug group-hover/card:text-cyan-400 transition-colors">
+                                            {cert.title}
+                                          </h4>
+                                          <span className="shrink-0 text-[9px] font-bold tracking-wider uppercase bg-cyan-400/10 text-cyan-400 px-1.5 py-0.5 rounded border border-cyan-400/20 font-mono">
+                                            {cert.grade}
+                                          </span>
+                                        </div>
+                                        <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                                          {cert.description}
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <a
+                                          href={cert.verifyLink}
+                                          className="inline-flex items-center gap-1 text-[#0d9488] hover:text-[#0f766e] text-[11px] font-bold tracking-wide transition-colors group/link"
+                                        >
+                                          Verify 
+                                          <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
+                                        </a>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
-                  </div>
+                  ) : (
+                    <div className="p-6 pt-2 border-t border-white/5 bg-black/20">
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {group.certs?.map((cert, certIdx) => (
+                          <div
+                            key={certIdx}
+                            className={`group/card relative flex flex-col justify-between p-6 rounded-xl border-l-[3px] border-t border-r border-b border-white/5 bg-[#0d1527]/60 hover:bg-[#0f1b33] transition-all duration-300 shadow-md ${
+                              group.highlight
+                                ? 'border-l-[#f59e0b] hover:shadow-amber-950/20'
+                                : 'border-l-[#06b6d4] hover:shadow-cyan-950/20'
+                            }`}
+                          >
+                            <div>
+                              <div className="flex items-start justify-between gap-3 mb-3">
+                                <h4 className={`font-bold text-white leading-snug transition-colors ${group.highlight ? 'text-xl group-hover/card:text-amber-400' : 'text-lg group-hover/card:text-cyan-400'}`}>
+                                  {cert.title}
+                                </h4>
+                                <span className={`shrink-0 text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded border font-mono ${
+                                  group.highlight
+                                    ? 'bg-amber-400/10 text-amber-400 border-amber-400/20'
+                                    : 'bg-cyan-400/10 text-cyan-400 border-cyan-400/20'
+                                }`}>
+                                  {cert.grade}
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                                {cert.description}
+                              </p>
+                            </div>
+                            <div>
+                              <a
+                                href={cert.verifyLink}
+                                className={`inline-flex items-center gap-1 text-xs font-bold tracking-wide transition-colors group/link ${
+                                  group.highlight
+                                    ? 'text-amber-500 hover:text-amber-600'
+                                    : 'text-[#0d9488] hover:text-[#0f766e]'
+                                }`}
+                              >
+                                Verify 
+                                <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );
