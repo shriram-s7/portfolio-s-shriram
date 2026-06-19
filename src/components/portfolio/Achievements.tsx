@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Trophy, X, ZoomIn, ZoomOut, Medal, Award, ExternalLink, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { Trophy, X, ZoomIn, ZoomOut, Medal, Award, ExternalLink, ChevronDown, ChevronUp, CheckCircle, ArrowUpRight } from 'lucide-react';
 
 interface Achievement {
   id: number;
@@ -78,6 +78,51 @@ const getBadgeStyle = (grade: string) => {
   }
 };
 
+// --- 3D TILT CARD ---
+const TiltCard = ({ children, className, onClick }: any) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [style, setStyle] = useState({
+    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)",
+    transition: "transform 0.4s ease-out"
+  });
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+
+    const x = (e.clientX - left - width / 2) / 20;
+    const y = (e.clientY - top - height / 2) / 20;
+
+    setStyle({
+      transform: `perspective(1000px) rotateX(${-y}deg) rotateY(${x}deg) scale(1.05) translateY(-12px)`,
+      transition: "none"
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({
+      transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)",
+      transition: "transform 0.5s ease-out"
+    });
+  };
+
+  return (
+    <div
+      ref={ref}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`group relative rounded-xl border border-white/5 bg-white/5 
+        hover:bg-[#020617] hover:border-opacity-100 hover:z-30
+        cursor-pointer ${className}`}
+      style={style}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Achievements = () => {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   const [showAllAchievements, setShowAllAchievements] = useState(false);
@@ -133,54 +178,67 @@ const Achievements = () => {
               className="animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div
+              <TiltCard
                 onClick={() => setSelectedAchievement(item)}
-                className={`group relative flex flex-col h-full rounded-2xl border border-white/10 bg-white/5 
-                  transition-all duration-300 ease-out cursor-pointer
-                  hover:scale-110 hover:-translate-y-4 hover:z-50 hover:bg-[#020617]
-                  ${item.glow}`}
+                className={`${item.glow} h-full`}
               >
-                {/* 1. HEADER AREA */}
-                <div className="flex justify-between items-center p-6 pb-0 z-10">
-                  <div className="px-3 py-1 rounded-full text-xs font-bold font-mono uppercase tracking-wider bg-white/5 border border-white/10 text-white/90">
-                    {item.date}
-                  </div>
+                {/* --- HIGHLIGHT GRADIENT --- */}
+                {/* Visible on Hover for that "Light Behind" effect */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${item.color.replace('text-', 'from-').split(' ')[0]}/20 via-transparent to-transparent`} />
+                <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
 
-                  <div className={`p-2 rounded-full backdrop-blur-xl bg-[#0a0a0a]/90 border border-white/10 shadow-[inset_0_0_12px_-3px_currentColor] ${item.color}`}>
-                    {(() => {
-                      const IconComponent = (item.icon && iconMap[item.icon]) ? iconMap[item.icon] : Trophy;
-                      return <IconComponent size={18} strokeWidth={2} className="text-current" />;
-                    })()}
-                  </div>
-                </div>
+                {/* Watermark Icon */}
+                {(() => {
+                  const IconComponent = (item.icon && iconMap[item.icon]) ? iconMap[item.icon] : Trophy;
+                  return (
+                    <IconComponent
+                      strokeWidth={1}
+                      className={`absolute -right-6 -top-6 w-48 h-48 opacity-5 group-hover:opacity-10 transition-all duration-500 -rotate-12 ${item.color.split(' ')[0]}`}
+                    />
+                  );
+                })()}
 
-                {/* 2. CONTENT AREA */}
-                <div className="p-6 flex-1 relative z-10 flex flex-col justify-between">
+                {/* Content */}
+                <div className="p-8 relative z-10 flex flex-col h-full min-h-[320px] justify-between">
                   <div>
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-white transition-colors text-white/90">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`p-3 rounded-lg ${item.color} shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-xl bg-black/40`}>
+                        {(() => {
+                          const IconComponent = (item.icon && iconMap[item.icon]) ? iconMap[item.icon] : Trophy;
+                          return <IconComponent size={24} />;
+                        })()}
+                      </div>
+
+                      <div className="px-3 py-1 rounded-full text-xs font-bold font-mono uppercase tracking-wider bg-white/5 border border-white/10 text-white/90">
+                        {item.date}
+                      </div>
+                    </div>
+
+                    {/* Title & Desc */}
+                    <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors text-white/90">
                       {item.title}
                     </h3>
-
                     <p className="text-base text-muted-foreground mb-3 line-clamp-1">
                       {item.organization}
                     </p>
-
-                    <p className="text-sm text-gray-400 mb-5 line-clamp-2 min-h-[2.5rem]">
+                    <p className="text-sm text-gray-400 leading-relaxed mb-6 line-clamp-2 min-h-[2.5rem]">
                       {item.description}
                     </p>
                   </div>
 
+                  {/* Footer / Results */}
                   <div className="flex items-center justify-between mt-auto">
                     <div className={`inline-flex items-center gap-2 text-sm font-bold px-3 py-1.5 rounded-md bg-white/5 border border-white/5 ${item.color}`}>
                       <Award size={16} />
                       {item.result}
                     </div>
-                    <span className="text-xs font-medium text-white/30 group-hover:text-primary transition-colors border-b border-transparent group-hover:border-primary">
-                      Verify →
+                    <span className="text-xs font-medium text-white/30 group-hover:text-primary transition-colors border-b border-transparent group-hover:border-primary flex items-center gap-1">
+                      Verify <ArrowUpRight size={14} />
                     </span>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </div>
           ))}
         </div>

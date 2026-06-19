@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { GraduationCap, Calendar, Star, BookOpen, Award, X, MapPin, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { GraduationCap, Calendar, Star, BookOpen, Award, X, MapPin, CheckCircle2, ArrowUpRight } from 'lucide-react';
 
 interface EducationItem {
   id: number;
@@ -126,6 +126,51 @@ const educationData: EducationItem[] = [
   },
 ];
 
+// --- 3D TILT CARD ---
+const TiltCard = ({ children, className, onClick }: any) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [style, setStyle] = useState({
+    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)",
+    transition: "transform 0.4s ease-out"
+  });
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+
+    const x = (e.clientX - left - width / 2) / 20;
+    const y = (e.clientY - top - height / 2) / 20;
+
+    setStyle({
+      transform: `perspective(1000px) rotateX(${-y}deg) rotateY(${x}deg) scale(1.05) translateY(-12px)`,
+      transition: "none"
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({
+      transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)",
+      transition: "transform 0.5s ease-out"
+    });
+  };
+
+  return (
+    <div
+      ref={ref}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`group relative rounded-xl border border-white/5 bg-white/5 
+        hover:bg-[#020617] hover:border-opacity-100 hover:z-30
+        cursor-pointer ${className}`}
+      style={style}
+    >
+      {children}
+    </div>
+  );
+};
+
 const Education = () => {
   const [selectedEdu, setSelectedEdu] = useState<EducationItem | null>(null);
 
@@ -156,71 +201,68 @@ const Education = () => {
           {educationData.map((edu, index) => (
             <div
               key={edu.id}
-              onClick={() => setSelectedEdu(edu)}
-              // --- THE "PHYSICAL POP" LOGIC ---
-              // 1. hover:scale-105: Expands slightly (not 110 to keep text readable)
-              // 2. hover:-translate-y-2: Moves up physically
-              // 3. hover:z-50: Critical for overlap
-              // 4. hover:bg-[#020617]: Solid background on hover
-              // 5. edu.glow: The specific colored shadow
-              className={`group relative p-6 md:p-8 rounded-2xl border border-white/10 bg-white/5 
-                transition-all duration-300 ease-out cursor-pointer
-                hover:scale-105 hover:-translate-y-2 hover:z-50 hover:bg-[#020617]
-                animate-slide-up flex flex-col md:flex-row gap-6 items-start md:items-center overflow-hidden
-                ${edu.glow}`}
+              className="animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${edu.color.replace('text-', 'from-').split(' ')[0]}/20 via-transparent to-transparent pointer-events-none`} />
+              <TiltCard
+                onClick={() => setSelectedEdu(edu)}
+                className={`${edu.glow} h-full flex flex-col md:flex-row gap-6 items-start md:items-center overflow-hidden p-6 md:p-8`}
+              >
+                {/* --- HIGHLIGHT GRADIENT --- */}
+                {/* Visible on Hover for that "Light Behind" effect */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${edu.color.replace('text-', 'from-').split(' ')[0]}/20 via-transparent to-transparent pointer-events-none`} />
+                <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
 
-              <edu.icon
-                strokeWidth={1}
-                className={`absolute -right-6 -bottom-6 w-32 h-32 opacity-5 group-hover:opacity-10 transition-all duration-500 -rotate-12 ${edu.color.split(' ')[0]}`}
-              />
+                {/* Watermark Icon */}
+                <edu.icon
+                  strokeWidth={1}
+                  className={`absolute -right-6 -top-6 w-32 h-32 opacity-5 group-hover:opacity-10 transition-all duration-500 -rotate-12 ${edu.color.split(' ')[0]}`}
+                />
 
-              <div className="flex-1 order-2 md:order-1 relative z-10">
-                <div className="flex flex-wrap items-center gap-3 mb-3">
-                  <span className="text-xs font-mono text-muted-foreground bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
-                    <Calendar size={12} />
-                    {edu.year}
-                  </span>
-                  {edu.score && (
-                    <span className={`text-xs font-bold ${edu.color} bg-white/5 px-2.5 py-1 rounded-full border border-white/5`}>
-                      {edu.score}
+                <div className="flex-1 order-2 md:order-1 relative z-10">
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <span className="text-xs font-mono text-muted-foreground bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
+                      <Calendar size={12} />
+                      {edu.year}
                     </span>
-                  )}
+                    {edu.score && (
+                      <span className={`text-xs font-bold ${edu.color} bg-white/5 px-2.5 py-1 rounded-full border border-white/5`}>
+                        {edu.score}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Increased Font Size */}
+                  <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-white transition-colors">
+                    {edu.degree}
+                  </h3>
+                  <p className="text-base font-medium text-muted-foreground mb-4">
+                    {edu.institution}
+                  </p>
+
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                    {edu.description}
+                  </p>
+
+                  <span className="inline-flex mt-4 text-xs font-medium text-white/50 group-hover:text-primary transition-colors border-b border-transparent group-hover:border-primary items-center gap-1">
+                    Click to view details <ArrowUpRight size={14} />
+                  </span>
                 </div>
 
-                {/* Increased Font Size */}
-                <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-white transition-colors">
-                  {edu.degree}
-                </h3>
-                <p className="text-base font-medium text-muted-foreground mb-4">
-                  {edu.institution}
-                </p>
-
-                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                  {edu.description}
-                </p>
-
-                <span className="inline-block mt-4 text-xs font-medium text-white/50 group-hover:text-primary transition-colors border-b border-transparent group-hover:border-primary">
-                  Click to view details
-                </span>
-              </div>
-
-              <div className="order-1 md:order-2 shrink-0 relative z-10">
-                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl ${edu.color} flex items-center justify-center p-4 bg-white/5 border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  {edu.logo ? (
-                    <img
-                      src={edu.logo}
-                      alt={edu.institution}
-                      className="w-full h-full object-contain drop-shadow-md"
-                    />
-                  ) : (
-                    <edu.icon size={32} strokeWidth={1.5} />
-                  )}
+                <div className="order-1 md:order-2 shrink-0 relative z-10">
+                  <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl ${edu.color} flex items-center justify-center p-4 bg-white/5 border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    {edu.logo ? (
+                      <img
+                        src={edu.logo}
+                        alt={edu.institution}
+                        className="w-full h-full object-contain drop-shadow-md"
+                      />
+                    ) : (
+                      <edu.icon size={32} strokeWidth={1.5} />
+                    )}
+                  </div>
                 </div>
-              </div>
-
+              </TiltCard>
             </div>
           ))}
         </div>

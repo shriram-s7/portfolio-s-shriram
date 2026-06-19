@@ -240,7 +240,7 @@ export const certificationGroups = [
   {
     id: 'aws',
     platform: 'AWS',
-    coursesCount: 8,
+    coursesCount: 4,
     certs: [
       { 
         title: 'Cloud Quest: Cloud Practitioner', 
@@ -280,46 +280,6 @@ export const certificationGroups = [
         skills: [
           "Covered foundational GenAI concepts — prompting, model selection, and responsible AI use on AWS",
           "Got hands-on with AWS's AI/ML service stack (Bedrock-adjacent concepts)"
-        ]
-      },
-      { 
-        title: 'AWS Practice Exam: Cloud Practitioner', 
-        grade: 'Completed', 
-        description: 'Official AWS practice exam — Cloud Practitioner track', 
-        verifyLink: '#',
-        skills: [
-          "Completed the official AWS practice exam for the Cloud Practitioner certification track",
-          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
-        ]
-      },
-      { 
-        title: 'AWS Practice Exam: Solutions Architect', 
-        grade: 'Completed', 
-        description: 'Official AWS practice exam — Solutions Architect track', 
-        verifyLink: '#',
-        skills: [
-          "Completed the official AWS practice exam for the Solutions Architect certification track",
-          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
-        ]
-      },
-      { 
-        title: 'AWS Practice Exam: Developer', 
-        grade: 'Completed', 
-        description: 'Official AWS practice exam — Developer track', 
-        verifyLink: '#',
-        skills: [
-          "Completed the official AWS practice exam for the Developer certification track",
-          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
-        ]
-      },
-      { 
-        title: 'AWS Practice Exam: AI Practitioner', 
-        grade: 'Completed', 
-        description: 'Official AWS practice exam — AI Practitioner track', 
-        verifyLink: '#',
-        skills: [
-          "Completed the official AWS practice exam for the AI Practitioner certification track",
-          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
         ]
       }
     ]
