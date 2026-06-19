@@ -394,21 +394,11 @@ const Achievements = () => {
 
             <div className="p-6 md:p-8 overflow-y-auto space-y-6">
               <div>
-                <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <h4 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
                   <Award size={18} className="text-primary" />
                   Achievement Summary
                 </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {selectedAchievement.description}
-                </p>
-              </div>
-
-              {selectedAchievement.myContribution && selectedAchievement.myContribution.length > 0 && (
-                <div>
-                  <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-                    <CheckCircle size={18} className="text-teal-400" />
-                    Key Contributions
-                  </h4>
+                {selectedAchievement.myContribution && selectedAchievement.myContribution.length > 0 && (
                   <ul className="space-y-2.5">
                     {selectedAchievement.myContribution.map((contribution, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
@@ -417,8 +407,8 @@ const Achievements = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
-              )}
+                )}
+              </div>
 
               {selectedAchievement.verifyLink && (
                 <div className="pt-2">
