@@ -146,7 +146,7 @@ const Achievements = () => {
                       {item.result}
                     </div>
                     <span className="text-xs font-medium text-white/30 group-hover:text-primary transition-colors border-b border-transparent group-hover:border-primary">
-                      Read Details →
+                      Verify →
                     </span>
                   </div>
                 </div>
