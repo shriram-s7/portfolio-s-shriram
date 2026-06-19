@@ -420,7 +420,7 @@ const Achievements = () => {
                 </div>
               )}
 
-              {selectedAchievement.verifyLink && selectedAchievement.verifyLink !== '#' && (
+              {selectedAchievement.verifyLink && (
                 <div className="pt-2">
                   <a
                     href={selectedAchievement.verifyLink}
@@ -429,7 +429,7 @@ const Achievements = () => {
                     className="inline-flex items-center gap-2 bg-teal-500/10 text-teal-400 border border-teal-500/20 hover:bg-teal-500/20 text-xs font-semibold px-4 py-2 rounded-lg transition-all"
                   >
                     <ExternalLink size={14} />
-                    <span>Verify Credential / View Proof</span>
+                    <span>Link to Certificate</span>
                   </a>
                 </div>
               )}
