@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, X, ZoomIn, ZoomOut, Medal, Award, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { Trophy, X, ZoomIn, ZoomOut, Medal, Award, ExternalLink, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
 
 interface Achievement {
   id: number;
@@ -11,6 +11,8 @@ interface Achievement {
   color: string;
   glow: string;
   icon?: string;
+  myContribution?: string[];
+  verifyLink?: string;
 }
 
 interface CourseCert {
@@ -390,14 +392,47 @@ const Achievements = () => {
               </div>
             </div>
 
-            <div className="p-6 md:p-8 overflow-y-auto">
-              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-                <Award size={18} className="text-primary" />
-                Achievement Summary
-              </h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {selectedAchievement.description}
-              </p>
+            <div className="p-6 md:p-8 overflow-y-auto space-y-6">
+              <div>
+                <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                  <Award size={18} className="text-primary" />
+                  Achievement Summary
+                </h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {selectedAchievement.description}
+                </p>
+              </div>
+
+              {selectedAchievement.myContribution && selectedAchievement.myContribution.length > 0 && (
+                <div>
+                  <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                    <CheckCircle size={18} className="text-teal-400" />
+                    Key Contributions
+                  </h4>
+                  <ul className="space-y-2.5">
+                    {selectedAchievement.myContribution.map((contribution, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
+                        <span className="text-teal-400 shrink-0 mt-1.5">•</span>
+                        <span>{contribution}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {selectedAchievement.verifyLink && selectedAchievement.verifyLink !== '#' && (
+                <div className="pt-2">
+                  <a
+                    href={selectedAchievement.verifyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-teal-500/10 text-teal-400 border border-teal-500/20 hover:bg-teal-500/20 text-xs font-semibold px-4 py-2 rounded-lg transition-all"
+                  >
+                    <ExternalLink size={14} />
+                    <span>Verify Credential / View Proof</span>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>
