@@ -8,7 +8,13 @@ export const achievements = [
         description: "Competitive coding event by Computer Society of MIT at Chakravyuha '25. Secured 1st place among participants from multiple colleges across Tamil Nadu.",
         color: 'text-yellow-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(250,204,21,0.8)] hover:border-yellow-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Solved competitive programming problems under live contest conditions against multiple-college participants",
+            "Focused on time-bound debugging and edge-case handling rather than just correctness",
+            "First major competitive coding result — set the benchmark for later hackathon performance"
+        ]
     },
     {
         id: 2,
@@ -19,7 +25,13 @@ export const achievements = [
         description: "Industry-Institution Summit project competition by Dept. of CSE and AI&ML at Easwari. Presented an AI project to a live industry evaluation panel.",
         color: 'text-blue-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(59,130,246,0.8)] hover:border-blue-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Built and presented a working AI prototype to an industry evaluation panel from CSE and AI&ML departments",
+            "Practiced explaining technical architecture to non-technical and semi-technical judges under Q&A pressure",
+            "Learned how to scope a project demo to fit a strict pitch time-window"
+        ]
     },
     {
         id: 3,
@@ -30,7 +42,13 @@ export const achievements = [
         description: "Mathematics-based coding competition at Mathrix'25 by Mathematics Colloquium, College of Engineering Guindy, Anna University.",
         color: 'text-cyan-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(34,211,238,0.8)] hover:border-cyan-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Applied mathematical and algorithmic reasoning to solve problems under a strict 3-hour competition window",
+            "Worked through combinatorics and logic-heavy problems alongside CS fundamentals",
+            "Competed against teams from across Anna University's CEG-affiliated colleges"
+        ]
     },
     {
         id: 4,
@@ -41,7 +59,13 @@ export const achievements = [
         description: "Algorithmic pseudocode and problem-solving challenge at CEG, Anna University. Tested logic-building and code translation under time constraints.",
         color: 'text-pink-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(244,114,182,0.8)] hover:border-pink-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Converted plain-English problem statements into structured pseudocode under time pressure",
+            "Practiced translating logic between abstraction levels — useful for technical interviews",
+            "Reinforced clean problem decomposition before writing actual code"
+        ]
     },
     {
         id: 5,
@@ -52,7 +76,13 @@ export const achievements = [
         description: "Logic-based reverse engineering coding challenge at Tech Fiesta'25, Chennai Institute of Technology.",
         color: 'text-orange-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(251,146,60,0.8)] hover:border-orange-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Worked backward from given outputs to reconstruct the original program logic",
+            "Sharpened pattern recognition and code-reading skills rather than code-writing speed",
+            "A non-technical/technical hybrid event — required explaining reasoning, not just submitting answers"
+        ]
     },
     {
         id: 6,
@@ -63,7 +93,13 @@ export const achievements = [
         description: "National-level NSO & IMO Olympiads conducted by SOF. Achieved School Rank 1 in both science and mathematics categories.",
         color: 'text-teal-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(45,212,191,0.8)] hover:border-teal-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Competed in both NSO (Science) and IMO (Mathematics) at the school level under SOF's national format",
+            "Achieved School Rank 1 in both subjects in the same academic year",
+            "Built foundational analytical habits that carried into later competitive coding"
+        ]
     },
     {
         id: 7,
@@ -74,7 +110,13 @@ export const achievements = [
         description: "Secured school first rank in CBSE Class 10 board examinations with an aggregate score of 97.4%.",
         color: 'text-purple-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(192,132,252,0.8)] hover:border-purple-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Secured school rank 1 with 97.4% aggregate in CBSE Class 10 boards",
+            "Maintained consistent performance across Math, Science, and Computer Applications",
+            "Foundation year that shaped disciplined study habits for higher secondary and engineering entrance prep"
+        ]
     },
     {
         id: 8,
@@ -85,7 +127,13 @@ export const achievements = [
         description: "Secured school third rank in CBSE Class 12 board examinations with an aggregate score of 95.8%.",
         color: 'text-indigo-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(129,140,248,0.8)] hover:border-indigo-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Secured school rank 3 with 95.8% aggregate in CBSE Class 12 boards",
+            "Balanced core science subjects with early programming exposure",
+            "Result directly fed into engineering college admission (Easwari Engineering College, CSE)"
+        ]
     },
     {
         id: 9,
@@ -96,7 +144,13 @@ export const achievements = [
         description: "Completed all 8 levels of Hindi examinations conducted by Dakshin Bharat Hindi Prachar Sabha.",
         color: 'text-rose-400',
         glow: 'hover:shadow-[0_0_80px_-10px_rgba(251,113,133,0.8)] hover:border-rose-400',
-        icon: 'Trophy'
+        icon: 'Trophy',
+        verifyLink: '#',
+        myContribution: [
+            "Completed all 8 levels of Hindi proficiency examinations conducted by Dakshin Bharat Hindi Prachar Sabha",
+            "A multi-year language commitment alongside regular academics",
+            "Demonstrates ability to sustain a long-term learning track outside core technical subjects"
+        ]
     },
 ];
 
