@@ -20,6 +20,7 @@ interface CourseCert {
   grade: string;
   description: string;
   verifyLink: string;
+  skills?: string[];
 }
 
 interface CertificationGroup {
@@ -53,10 +54,39 @@ const achievements = achievementsData.map((item: any) => ({
   ...item
 }));
 
+// Helpers for collapsible certification card styling
+const getCardBgStyle = (highlight: boolean, isExpanded: boolean) => {
+  if (highlight) {
+    return isExpanded
+      ? 'border-l-[4px] border-l-[#f59e0b] border-t-white/20 border-r-white/20 border-b-white/20 bg-gradient-to-br from-[#241a0d]/95 to-[#382611]/50 shadow-lg shadow-amber-500/5'
+      : 'border-l-[4px] border-l-[#f59e0b] border-t-white/5 border-r-white/5 border-b-white/5 bg-gradient-to-br from-[#1e150a]/80 to-[#2c1d0c]/40 hover:from-[#241a0d]/95 hover:to-[#382611]/50 shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.15)]';
+  } else {
+    return isExpanded
+      ? 'border-l-[4px] border-l-[#06b6d4] border-t-white/20 border-r-white/20 border-b-white/20 bg-gradient-to-br from-[#111e38]/95 to-[#223354]/50 shadow-lg shadow-cyan-500/5'
+      : 'border-l-[4px] border-l-[#06b6d4] border-t-white/5 border-r-white/5 border-b-white/5 bg-gradient-to-br from-[#0f172a]/80 to-[#1e293b]/40 hover:from-[#111e38]/95 hover:to-[#223354]/50 shadow-sm hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]';
+  }
+};
+
+const getBadgeStyle = (grade: string) => {
+  const g = grade.toLowerCase();
+  if (g.includes('elite + silver')) {
+    return 'bg-cyan-400/10 text-cyan-300 border-cyan-400/30';
+  } else if (g.includes('elite') || g.includes('ocp certified')) {
+    return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+  } else {
+    return 'bg-slate-500/10 text-slate-400 border-slate-500/30';
+  }
+};
+
 const Achievements = () => {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   const [showAllAchievements, setShowAllAchievements] = useState(false);
   const [openGroups, setOpenGroups] = useState<{ [key: string]: boolean }>({});
+  const [expandedCertId, setExpandedCertId] = useState<string | null>(null);
+
+  const toggleCert = (certId: string) => {
+    setExpandedCertId(prev => prev === certId ? null : certId);
+  };
 
   const visibleAchievements = showAllAchievements ? achievements : achievements.slice(0, 6);
 
@@ -258,39 +288,74 @@ const Achievements = () => {
                                 opacity: isSubOpen ? 1 : 0
                               }}
                             >
-                              <div className="p-6 pt-2 border-t border-white/5 bg-black/10">
-                                <div className="grid md:grid-cols-2 gap-4">
-                                  {subGroup.certs.map((cert, certIdx) => (
-                                    <div
-                                      key={certIdx}
-                                      className="group/card relative flex flex-col justify-between p-5 rounded-xl border-l-[3px] border-l-[#06b6d4] border-t border-r border-b border-white/5 bg-[#0d1527]/40 hover:bg-[#0f1b33] transition-all duration-300 shadow-sm hover:shadow-cyan-950/10"
-                                    >
-                                      <div>
-                                        <div className="flex items-start justify-between gap-3 mb-2">
-                                          <h4 className="font-bold text-base text-white leading-snug group-hover/card:text-cyan-400 transition-colors">
-                                            {cert.title}
-                                          </h4>
-                                          <span className="shrink-0 text-[9px] font-bold tracking-wider uppercase bg-cyan-400/10 text-cyan-400 px-1.5 py-0.5 rounded border border-cyan-400/20 font-mono">
-                                            {cert.grade}
-                                          </span>
-                                        </div>
-                                        <p className="text-xs text-gray-400 leading-relaxed mb-3">
-                                          {cert.description}
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <a
-                                          href={cert.verifyLink}
-                                          className="inline-flex items-center gap-1 text-[#0d9488] hover:text-[#0f766e] text-[11px] font-bold tracking-wide transition-colors group/link"
-                                        >
-                                          Verify 
-                                          <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  ))}
+                              <div className="p-6 pt-2 border-t border-white/5 bg-black/20">
+                                 <div className="flex flex-col gap-3">
+                                   {subGroup.certs.map((cert, certIdx) => {
+                                     const certId = `${subGroup.id}-${certIdx}`;
+                                     const isExpanded = expandedCertId === certId;
+                                     return (
+                                       <div
+                                         key={certIdx}
+                                         onClick={() => toggleCert(certId)}
+                                         className={`group/card relative flex flex-col p-5 rounded-xl border transition-all duration-300 cursor-pointer ${getCardBgStyle(false, isExpanded)}`}
+                                       >
+                                         {/* Header Row */}
+                                         <div className="flex items-start justify-between gap-3 w-full">
+                                           <div className="flex-1">
+                                             <div className="flex items-start justify-between gap-3">
+                                               <h4 className="font-bold text-base text-white leading-snug group-hover/card:text-cyan-400 transition-colors">
+                                                 {cert.title}
+                                               </h4>
+                                               <span className={`shrink-0 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded border font-mono ${getBadgeStyle(cert.grade)}`}>
+                                                 {cert.grade}
+                                               </span>
+                                             </div>
+                                           </div>
+                                           <div className={`shrink-0 p-1.5 rounded-full text-white/50 transition-all duration-300 group-hover/card:text-cyan-400 group-hover/card:bg-white/5 ${isExpanded ? 'text-cyan-400 bg-white/5' : ''}`}>
+                                             <ChevronDown size={16} className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                           </div>
+                                         </div>
+ 
+                                         {/* Collapsible Content */}
+                                         <div
+                                           className="transition-all duration-300 ease-in-out overflow-hidden"
+                                           style={{
+                                             maxHeight: isExpanded ? '600px' : '0px',
+                                             opacity: isExpanded ? 1 : 0,
+                                             marginTop: isExpanded ? '12px' : '0px'
+                                           }}
+                                         >
+                                           <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                                             {cert.description}
+                                           </p>
+                                           {cert.skills && cert.skills.length > 0 && (
+                                             <ul className="mt-2 mb-4 space-y-1.5 pl-1 list-none text-[11px] text-gray-400 leading-relaxed">
+                                               {cert.skills.map((skill, idx) => (
+                                                 <li key={idx} className="flex items-start gap-2">
+                                                   <span className="text-cyan-400 select-none mt-0.5">•</span>
+                                                   <span>{skill}</span>
+                                                 </li>
+                                               ))}
+                                             </ul>
+                                           )}
+                                           <div className="flex justify-start items-center mt-3 pt-3 border-t border-white/5">
+                                             <a
+                                               href={cert.verifyLink}
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               onClick={(e) => e.stopPropagation()}
+                                               className="inline-flex items-center gap-1.5 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-all group/btn"
+                                             >
+                                               View Certificate 
+                                               <span className="transform group-hover/btn:translate-x-1 transition-transform">→</span>
+                                             </a>
+                                           </div>
+                                         </div>
+                                       </div>
+                                     );
+                                   })}
+                                 </div>
                                 </div>
-                              </div>
                             </div>
                           </div>
                         );
@@ -298,48 +363,79 @@ const Achievements = () => {
                     </div>
                   ) : (
                     <div className="p-6 pt-2 border-t border-white/5 bg-black/20">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        {group.certs?.map((cert, certIdx) => (
-                          <div
-                            key={certIdx}
-                            className={`group/card relative flex flex-col justify-between p-6 rounded-xl border-l-[3px] border-t border-r border-b border-white/5 bg-[#0d1527]/60 hover:bg-[#0f1b33] transition-all duration-300 shadow-md ${
-                              group.highlight
-                                ? 'border-l-[#f59e0b] hover:shadow-amber-950/20'
-                                : 'border-l-[#06b6d4] hover:shadow-cyan-950/20'
-                            }`}
-                          >
-                            <div>
-                              <div className="flex items-start justify-between gap-3 mb-3">
-                                <h4 className={`font-bold text-white leading-snug transition-colors ${group.highlight ? 'text-xl group-hover/card:text-amber-400' : 'text-lg group-hover/card:text-cyan-400'}`}>
-                                  {cert.title}
-                                </h4>
-                                <span className={`shrink-0 text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded border font-mono ${
+                      <div className="flex flex-col gap-3">
+                        {group.certs?.map((cert, certIdx) => {
+                          const certId = `${group.id}-${certIdx}`;
+                          const isExpanded = expandedCertId === certId;
+                          return (
+                            <div
+                              key={certIdx}
+                              onClick={() => toggleCert(certId)}
+                              className={`group/card relative flex flex-col p-6 rounded-xl border transition-all duration-300 cursor-pointer ${getCardBgStyle(!!group.highlight, isExpanded)}`}
+                            >
+                              {/* Header Row */}
+                              <div className="flex items-start justify-between gap-3 w-full">
+                                <div className="flex-1">
+                                  <div className="flex items-start justify-between gap-3">
+                                    <h4 className={`font-bold text-white leading-snug transition-colors ${group.highlight ? 'text-xl group-hover/card:text-amber-400' : 'text-lg group-hover/card:text-cyan-400'}`}>
+                                      {cert.title}
+                                    </h4>
+                                    <span className={`shrink-0 text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded border font-mono ${getBadgeStyle(cert.grade)}`}>
+                                      {cert.grade}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className={`shrink-0 p-1.5 rounded-full text-white/50 transition-all duration-300 group-hover/card:bg-white/5 ${
                                   group.highlight
-                                    ? 'bg-amber-400/10 text-amber-400 border-amber-400/20'
-                                    : 'bg-cyan-400/10 text-cyan-400 border-cyan-400/20'
+                                    ? `group-hover/card:text-amber-400 ${isExpanded ? 'text-amber-400 bg-white/5' : ''}`
+                                    : `group-hover/card:text-cyan-400 ${isExpanded ? 'text-cyan-400 bg-white/5' : ''}`
                                 }`}>
-                                  {cert.grade}
-                                </span>
+                                  <ChevronDown size={18} className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                </div>
                               </div>
-                              <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                                {cert.description}
-                              </p>
-                            </div>
-                            <div>
-                              <a
-                                href={cert.verifyLink}
-                                className={`inline-flex items-center gap-1 text-xs font-bold tracking-wide transition-colors group/link ${
-                                  group.highlight
-                                    ? 'text-amber-500 hover:text-amber-600'
-                                    : 'text-[#0d9488] hover:text-[#0f766e]'
-                                }`}
+
+                              {/* Collapsible Content */}
+                              <div
+                                className="transition-all duration-300 ease-in-out overflow-hidden"
+                                style={{
+                                  maxHeight: isExpanded ? '600px' : '0px',
+                                  opacity: isExpanded ? 1 : 0,
+                                  marginTop: isExpanded ? '16px' : '0px'
+                                }}
                               >
-                                Verify 
-                                <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
-                              </a>
+                                <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                                  {cert.description}
+                                </p>
+                                {cert.skills && cert.skills.length > 0 && (
+                                  <ul className="mt-2 mb-4 space-y-1.5 pl-1 list-none text-xs text-gray-400 leading-relaxed">
+                                    {cert.skills.map((skill, idx) => (
+                                      <li key={idx} className="flex items-start gap-2">
+                                        <span className={`select-none mt-0.5 ${group.highlight ? 'text-amber-400' : 'text-cyan-400'}`}>•</span>
+                                        <span>{skill}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                                <div className="flex justify-start items-center mt-4 pt-4 border-t border-white/5">
+                                  <a
+                                    href={cert.verifyLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all border group/btn ${
+                                      group.highlight
+                                        ? 'border-amber-500/40 text-amber-300 hover:bg-amber-500/10'
+                                        : 'border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10'
+                                    }`}
+                                  >
+                                    View Certificate 
+                                    <span className="transform group-hover/btn:translate-x-1 transition-transform">→</span>
+                                  </a>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   )}

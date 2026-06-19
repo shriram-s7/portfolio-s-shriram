@@ -226,7 +226,7 @@ export const certificationGroups = [
       },
       { 
         title: 'Problem Solving in C', 
-        grade: 'Completed', 
+        grade: 'Elite', 
         description: 'Algorithmic problem solving and C programming fundamentals', 
         verifyLink: '#',
         skills: [
