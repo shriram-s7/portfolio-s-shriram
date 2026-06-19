@@ -166,7 +166,12 @@ export const certificationGroups = [
         title: 'Oracle Certified Professional: Java SE 17 Developer',
         grade: 'OCP Certified',
         description: 'Industry-recognized global certification for Java SE 17. Covers OOP, streams, modules, concurrency, and modern Java features.',
-        verifyLink: '#'
+        verifyLink: '#',
+        skills: [
+          "Validated against Java SE 17 LTS features — records, sealed classes, pattern matching for switch",
+          "Covered core OOP, exception handling, generics, and the Collections framework at a professional depth",
+          "Industry-recognized certification — not a course-completion badge, but a proctored skills exam"
+        ]
       }
     ]
   },
@@ -175,11 +180,61 @@ export const certificationGroups = [
     platform: 'NPTEL',
     coursesCount: 5,
     certs: [
-      { title: 'Natural Language Processing', grade: 'Elite', description: 'Text processing, transformers, and NLP model training', verifyLink: '#' },
-      { title: 'Blockchain and its Applications', grade: 'Elite', description: 'Distributed ledger, smart contracts, and decentralized apps', verifyLink: '#' },
-      { title: 'Industry 4.0 & IoT', grade: 'Elite + Silver', description: 'Industrial IoT protocols, automation, and cyber-physical systems', verifyLink: '#' },
-      { title: 'Human-Computer Interfaces', grade: 'Elite', description: 'UX design principles, interaction models, usability evaluation', verifyLink: '#' },
-      { title: 'Problem Solving in C', grade: 'Completed', description: 'Algorithmic problem solving and C programming fundamentals', verifyLink: '#' }
+      { 
+        title: 'Natural Language Processing', 
+        grade: 'Elite', 
+        description: 'Text processing, transformers, and NLP model training', 
+        verifyLink: '#',
+        skills: [
+          "Covered the NLP pipeline end-to-end: tokenization, POS tagging, parsing, through to sentiment analysis and topic modeling",
+          "Built understanding of how text mining applications like entity linking and summarization actually work",
+          "Elite grade — required clearing both assignment and proctored exam thresholds, not just course completion"
+        ]
+      },
+      { 
+        title: 'Blockchain and its Applications', 
+        grade: 'Elite', 
+        description: 'Distributed ledger, smart contracts, and decentralized apps', 
+        verifyLink: '#',
+        skills: [
+          "Worked through cryptographic primitives (hashing, digital signatures) up to consensus mechanisms",
+          "Got hands-on with both permissionless (Ethereum smart contracts) and permissioned (Hyperledger Fabric) models",
+          "Studied real applications MeitY flagged as nationally relevant — supply chain, identity, land records"
+        ]
+      },
+      { 
+        title: 'Industry 4.0 & IoT', 
+        grade: 'Elite + Silver', 
+        description: 'Industrial IoT protocols, automation, and cyber-physical systems', 
+        verifyLink: '#',
+        skills: [
+          "Covered the IIoT stack from sensing and actuation up through analytics and fog computing",
+          "Studied real industrial application domains — healthcare, power plants, manufacturing safety systems",
+          "Elite + Silver — top-tier performance band, not just a pass"
+        ]
+      },
+      { 
+        title: 'Human-Computer Interfaces', 
+        grade: 'Elite', 
+        description: 'UX design principles, interaction models, usability evaluation', 
+        verifyLink: '#',
+        skills: [
+          "Studied interaction design principles and usability evaluation methods",
+          "Looked at HCI through both design and engineering lenses — not just UI aesthetics",
+          "Elite grade certification from IIT Guwahati"
+        ]
+      },
+      { 
+        title: 'Problem Solving in C', 
+        grade: 'Completed', 
+        description: 'Algorithmic problem solving and C programming fundamentals', 
+        verifyLink: '#',
+        skills: [
+          "Reinforced core algorithmic thinking using C as the implementation language",
+          "Built the foundation that later carried into Python and Java problem-solving",
+          "12-week structured course with proctored final assessment"
+        ]
+      }
     ]
   },
   {
@@ -187,14 +242,86 @@ export const certificationGroups = [
     platform: 'AWS',
     coursesCount: 8,
     certs: [
-      { title: 'Cloud Quest: Cloud Practitioner', grade: 'Completed', description: 'Core AWS services, cloud concepts, global infrastructure', verifyLink: '#' },
-      { title: 'Cloud Quest: Solutions Architect', grade: 'Completed', description: 'Resilient, cost-effective cloud architecture design on AWS', verifyLink: '#' },
-      { title: 'Cloud Quest: Serverless Developer', grade: 'Completed', description: 'Serverless apps using Lambda, API Gateway, and DynamoDB', verifyLink: '#' },
-      { title: 'Cloud Quest: Generative AI Practitioner', grade: 'Completed', description: 'Foundational GenAI and AWS AI/ML services', verifyLink: '#' },
-      { title: 'AWS Practice Exam: Cloud Practitioner', grade: 'Completed', description: 'Official AWS practice exam — Cloud Practitioner track', verifyLink: '#' },
-      { title: 'AWS Practice Exam: Solutions Architect', grade: 'Completed', description: 'Official AWS practice exam — Solutions Architect track', verifyLink: '#' },
-      { title: 'AWS Practice Exam: Developer', grade: 'Completed', description: 'Official AWS practice exam — Developer track', verifyLink: '#' },
-      { title: 'AWS Practice Exam: AI Practitioner', grade: 'Completed', description: 'Official AWS practice exam — AI Practitioner track', verifyLink: '#' }
+      { 
+        title: 'Cloud Quest: Cloud Practitioner', 
+        grade: 'Completed', 
+        description: 'Core AWS services, cloud concepts, global infrastructure', 
+        verifyLink: '#',
+        skills: [
+          "Learned core AWS services and global infrastructure through a gamified, hands-on console experience",
+          "Covered IAM, billing fundamentals, and shared responsibility model basics"
+        ]
+      },
+      { 
+        title: 'Cloud Quest: Solutions Architect', 
+        grade: 'Completed', 
+        description: 'Resilient, cost-effective cloud architecture design on AWS', 
+        verifyLink: '#',
+        skills: [
+          "Designed resilient, cost-optimized architectures using EC2, S3, VPC, and load balancing inside a simulated environment",
+          "Practiced trade-off thinking between cost, performance, and fault tolerance"
+        ]
+      },
+      { 
+        title: 'Cloud Quest: Serverless Developer', 
+        grade: 'Completed', 
+        description: 'Serverless apps using Lambda, API Gateway, and DynamoDB', 
+        verifyLink: '#',
+        skills: [
+          "Built serverless workflows using Lambda, API Gateway, and DynamoDB in interactive labs",
+          "Learned event-driven architecture patterns without managing servers directly"
+        ]
+      },
+      { 
+        title: 'Cloud Quest: Generative AI Practitioner', 
+        grade: 'Completed', 
+        description: 'Foundational GenAI and AWS AI/ML services', 
+        verifyLink: '#',
+        skills: [
+          "Covered foundational GenAI concepts — prompting, model selection, and responsible AI use on AWS",
+          "Got hands-on with AWS's AI/ML service stack (Bedrock-adjacent concepts)"
+        ]
+      },
+      { 
+        title: 'AWS Practice Exam: Cloud Practitioner', 
+        grade: 'Completed', 
+        description: 'Official AWS practice exam — Cloud Practitioner track', 
+        verifyLink: '#',
+        skills: [
+          "Completed the official AWS practice exam for the Cloud Practitioner certification track",
+          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
+        ]
+      },
+      { 
+        title: 'AWS Practice Exam: Solutions Architect', 
+        grade: 'Completed', 
+        description: 'Official AWS practice exam — Solutions Architect track', 
+        verifyLink: '#',
+        skills: [
+          "Completed the official AWS practice exam for the Solutions Architect certification track",
+          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
+        ]
+      },
+      { 
+        title: 'AWS Practice Exam: Developer', 
+        grade: 'Completed', 
+        description: 'Official AWS practice exam — Developer track', 
+        verifyLink: '#',
+        skills: [
+          "Completed the official AWS practice exam for the Developer certification track",
+          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
+        ]
+      },
+      { 
+        title: 'AWS Practice Exam: AI Practitioner', 
+        grade: 'Completed', 
+        description: 'Official AWS practice exam — AI Practitioner track', 
+        verifyLink: '#',
+        skills: [
+          "Completed the official AWS practice exam for the AI Practitioner certification track",
+          "Used as exam-readiness validation before attempting (or in preparation for) the official certification"
+        ]
+      }
     ]
   },
   {
@@ -207,7 +334,16 @@ export const certificationGroups = [
         platform: 'Google Cloud',
         coursesCount: 1,
         certs: [
-          { title: 'Introduction to Generative AI', grade: 'Completed', description: 'Foundational GenAI concepts and Google Cloud AI tools', verifyLink: '#' }
+          { 
+            title: 'Introduction to Generative AI', 
+            grade: 'Completed', 
+            description: 'Foundational GenAI concepts and Google Cloud AI tools', 
+            verifyLink: '#',
+            skills: [
+              "Covered foundational GenAI concepts — how LLMs are trained, prompted, and evaluated",
+              "Looked at Google Cloud's AI tooling and use-case patterns for applied GenAI"
+            ]
+          }
         ]
       },
       {
@@ -215,12 +351,12 @@ export const certificationGroups = [
         platform: 'Cisco NetAcad',
         coursesCount: 6,
         certs: [
-          { title: 'Python Essentials', grade: 'Completed', description: 'Core Python programming concepts and scripting fundamentals', verifyLink: '#' },
-          { title: 'Networking Basics', grade: 'Completed', description: 'Fundamentals of computer networking, protocols, and network architecture', verifyLink: '#' },
-          { title: 'Introduction to Modern AI', grade: 'Completed', description: 'Overview of modern AI concepts, use cases, and ethical considerations', verifyLink: '#' },
-          { title: 'Security and Connectivity Fundamentals', grade: 'Completed', description: 'Core concepts in cybersecurity, network security, and connectivity', verifyLink: '#' },
-          { title: 'Analyze Customer Requirements', grade: 'Completed', description: 'Business analysis techniques for understanding and documenting customer needs', verifyLink: '#' },
-          { title: 'Update Your Resume', grade: 'Completed', description: 'Professional resume writing and career development skills', verifyLink: '#' }
+          { title: 'Python Essentials', grade: 'Completed', description: 'Core Python programming concepts and scripting fundamentals', verifyLink: '#', skills: ["Core Python syntax, control flow, functions, and basic OOP", "Self-paced track building toward more advanced Cisco AI/networking courses"] },
+          { title: 'Networking Basics', grade: 'Completed', description: 'Fundamentals of computer networking, protocols, and network architecture', verifyLink: '#', skills: ["Fundamentals of network architecture, protocols, and the OSI model", "Foundational knowledge for understanding how distributed systems communicate"] },
+          { title: 'Introduction to Modern AI', grade: 'Completed', description: 'Overview of modern AI concepts, use cases, and ethical considerations', verifyLink: '#', skills: ["Overview of how modern AI systems are built, deployed, and evaluated", "Covered ethical considerations and responsible AI use cases"] },
+          { title: 'Security and Connectivity Fundamentals', grade: 'Completed', description: 'Core concepts in cybersecurity, network security, and connectivity', verifyLink: '#', skills: ["Core cybersecurity concepts — threats, defenses, and secure connectivity practices", "Network security fundamentals relevant to any deployed system"] },
+          { title: 'Analyze Customer Requirements', grade: 'Completed', description: 'Business analysis techniques for understanding and documenting customer needs', verifyLink: '#', skills: ["Business analysis techniques for translating stakeholder needs into technical requirements", "Useful for client-facing project scoping"] },
+          { title: 'Update Your Resume', grade: 'Completed', description: 'Professional resume writing and career development skills', verifyLink: '#', skills: ["Professional resume writing and personal branding for tech roles", "Career-readiness track from Cisco's employability series"] }
         ]
       },
       {
@@ -228,8 +364,8 @@ export const certificationGroups = [
         platform: 'IBM SkillBuild',
         coursesCount: 2,
         certs: [
-          { title: 'AI and Sustainability', grade: 'Completed', description: 'Applying AI for sustainability challenges — 1M1B IBM SkillBuild program', verifyLink: '#' },
-          { title: 'Mastering the Art of Prompt Engineering', grade: 'Completed', description: 'Advanced prompt engineering strategies for generative AI models', verifyLink: '#' }
+          { title: 'AI and Sustainability', grade: 'Completed', description: 'Applying AI for sustainability challenges — 1M1B IBM SkillBuild program', verifyLink: '#', skills: ["Explored applying AI models to sustainability-focused problems under 1M1B's mentorship framework", "Bridged technical AI skills with real-world social impact use cases"] },
+          { title: 'Mastering the Art of Prompt Engineering', grade: 'Completed', description: 'Advanced prompt engineering strategies for generative AI models', verifyLink: '#', skills: ["Advanced prompting strategies — few-shot, chain-of-thought, and structured output prompting", "Directly applicable to working with LLMs in production tools"] }
         ]
       },
       {
@@ -237,7 +373,7 @@ export const certificationGroups = [
         platform: 'MongoDB',
         coursesCount: 1,
         certs: [
-          { title: 'MongoDB Basics for Students', grade: 'Completed', description: 'NoSQL database fundamentals, CRUD operations, and MongoDB Atlas', verifyLink: '#' }
+          { title: 'MongoDB Basics for Students', grade: 'Completed', description: 'NoSQL database fundamentals, CRUD operations, and MongoDB Atlas', verifyLink: '#', skills: ["NoSQL data modeling and CRUD operations using MongoDB Atlas", "Document-based database design as a contrast to relational SQL systems"] }
         ]
       },
       {
@@ -245,8 +381,8 @@ export const certificationGroups = [
         platform: 'Infosys Springboard',
         coursesCount: 2,
         certs: [
-          { title: 'Java Programming', grade: 'Completed', description: 'Core Java — OOP, collections, exception handling', verifyLink: '#' },
-          { title: 'C and C++ Programming', grade: 'Completed', description: 'C and C++ fundamentals, pointers, and memory management', verifyLink: '#' }
+          { title: 'Java Programming', grade: 'Completed', description: 'Core Java — OOP, collections, exception handling', verifyLink: '#', skills: ["Core Java — OOP principles, collections framework, exception handling", "Complements the Oracle Java SE 17 certification with applied practice"] },
+          { title: 'C and C++ Programming', grade: 'Completed', description: 'C and C++ fundamentals, pointers, and memory management', verifyLink: '#', skills: ["C and C++ fundamentals — pointers, memory management, and low-level programming", "Built the systems-level foundation underlying later high-level language work"] }
         ]
       }
     ]
@@ -262,7 +398,8 @@ export const certifications = certificationGroups.flatMap((group) => {
                 issuer: subGroup.platform,
                 score: cert.grade,
                 description: cert.description,
-                verifyLink: cert.verifyLink
+                verifyLink: cert.verifyLink,
+                skills: cert.skills
             }))
         );
     }
@@ -272,6 +409,7 @@ export const certifications = certificationGroups.flatMap((group) => {
         issuer: group.platform,
         score: cert.grade,
         description: cert.description,
-        verifyLink: cert.verifyLink
+        verifyLink: cert.verifyLink,
+        skills: cert.skills
     }));
 });
