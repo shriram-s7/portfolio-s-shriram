@@ -1,11 +1,61 @@
-import { useState, useEffect } from 'react';
-import { Eye, Briefcase, X, Download, ZoomIn, ZoomOut, MapPin } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Eye, Briefcase, X, Download, ZoomIn, ZoomOut, MapPin, Github, Linkedin, Mail, Wrench, Rocket, GraduationCap } from 'lucide-react';
 import { profileData } from '../../data/profileData';
 
 const Hero = () => {
   const [showResume, setShowResume] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
-  const { name, role, summary, location, education, techStack } = profileData;
+  const { name, role, summary, location, education, techStack, github, linkedin, email } = profileData;
+
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [stats, setStats] = useState({
+    certifications: 0,
+    projects: 0,
+    hackathons: 0,
+    competitions: 0
+  });
+
+  const [eecLogoError, setEecLogoError] = useState(false);
+  const [iitmLogoError, setIitmLogoError] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const duration = 1200; // 1.2s
+          const startTimestamp = performance.now();
+          
+          const animate = (now: number) => {
+            const elapsed = now - startTimestamp;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // easeOutQuad timing
+            const easeProgress = progress * (2 - progress);
+            
+            setStats({
+              certifications: Math.round(easeProgress * 15),
+              projects: Math.round(easeProgress * 10),
+              hackathons: Math.round(easeProgress * 3),
+              competitions: Math.round(easeProgress * 10)
+            });
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+    
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (showResume) {
@@ -26,7 +76,7 @@ const Hero = () => {
   const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 0.25, 0.5));
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-24">
       {/* Background Effects - GLOW INTENSITY INCREASED */}
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-30" />
       {/* Increased size from 600px to 800px and added opacity for stronger, larger glow */}
@@ -37,24 +87,33 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         <div className="max-w-[90rem] mx-auto text-center">
 
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-4 animate-slide-up">
-            <span className="gradient-text">{name}</span>
+          <h1 className="text-5xl md:text-7xl font-display font-bold mb-3 animate-slide-up">
+            <span className="bg-gradient-to-r from-[#00C9A7] to-[#845EF7] bg-clip-text text-transparent">{name}</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6 animate-slide-up animation-delay-100">
-            <MapPin size={16} className="text-primary" />
-            <span className="text-base font-medium">{location}</span>
+          {/* Dual Degree Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-3 animate-slide-up animation-delay-100">
+            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-[#00C9A7]/15 text-[#00C9A7] border border-[#00C9A7]/30 whitespace-nowrap">
+              🎓 B.E. CSE @ Easwari Engineering College
+            </span>
+            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-[#845EF7]/20 text-[#A78BFA] border border-[#845EF7]/30 whitespace-nowrap">
+              🎓 BS Data Science @ IIT Madras
+            </span>
           </div>
 
-          <p className="text-xl md:text-2xl text-foreground font-medium mb-4 animate-slide-up animation-delay-150">
+          <p className="text-[20px] text-white font-semibold mb-2 animate-slide-up animation-delay-150">
             {role}
           </p>
 
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 animate-slide-up animation-delay-200">
+          <div className="text-[14.5px] text-[#94A3B8] mb-4 animate-slide-up animation-delay-175">
+            {location}
+          </div>
+
+          <p className="text-[#E2E8F0] text-[16px] leading-[1.7] max-w-2xl mx-auto mb-5 animate-slide-up animation-delay-200">
             {summary}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-12 animate-slide-up animation-delay-300">
+          <div className="flex flex-wrap justify-center gap-4 mb-8 animate-slide-up animation-delay-300">
             <a href="#projects" className="btn-primary">
               <Briefcase size={18} />
               View Projects
@@ -68,100 +127,275 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* --- STATS BAR --- */}
-          {/* Changes:
-             1. Reverted bg-[#0a0a0a]/80 to bg-black/40 for more translucency (glass effect).
-             2. Kept the new border-primary/30 and shadow highlight.
-          */}
-          <div className="
-            w-full rounded-2xl 
-            bg-black/40 backdrop-blur-xl 
-            border border-primary/30
-            shadow-[0_0_40px_-10px_rgba(34,211,238,0.15)]
-            hover:border-primary/50 hover:shadow-[0_0_40px_-5px_rgba(34,211,238,0.25)]
-            transition-all duration-300
-            p-6 md:px-8 md:py-8 
-            animate-slide-up animation-delay-400 
-            text-left
-          ">
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-y-8 gap-x-6 items-start">
+          {/* --- SLIM STATS STRIP --- */}
+          <div
+            ref={statsRef}
+            className="flex flex-wrap md:flex-nowrap items-center justify-center gap-x-6 gap-y-3 rounded-[12px] border w-full max-w-5xl mx-auto mb-8 animate-slide-up animation-delay-350"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              borderColor: 'rgba(255, 255, 255, 0.08)',
+              padding: '16px 32px'
+            }}
+          >
+            {/* Item 1 */}
+            <div className="flex items-center gap-2 whitespace-nowrap hover:-translate-y-0.5 transition-transform duration-200 ease-out cursor-default">
+              <span className="font-bold text-[22px] text-[#00C9A7] leading-none">{stats.certifications}+</span>
+              <span className="text-[#94A3B8] text-[13px] font-normal">Certifications</span>
+            </div>
 
-              {/* 1. EDUCATION (4 Columns) */}
-              <div className="xl:col-span-4 xl:border-r border-white/5 xl:pr-6">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4 font-semibold">Education</p>
-                <div className="flex flex-col gap-5">
-                  <div className="h-11 flex flex-col justify-center">
-                    <p className="font-bold text-foreground text-base leading-tight">{education[0].institution}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{education[0].degree} • {education[0].year}</p>
-                  </div>
-                  <div className="h-11 flex flex-col justify-center">
-                    <p className="font-bold text-foreground text-base leading-tight">{education[1].institution}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{education[1].degree} • {education[1].year}</p>
-                  </div>
-                </div>
-              </div>
+            <div className="hidden md:block w-[1px] h-5 bg-white/10 shrink-0" />
 
-              {/* 2. LEVEL (2 Columns) */}
-              <div className="xl:col-span-2 xl:border-r border-white/5 xl:pr-6">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4 font-semibold">Current Level</p>
-                <div className="flex flex-col gap-5">
-                  <div className="h-11 flex items-center">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 whitespace-nowrap">
-                      Semester 5
+            {/* Item 2 */}
+            <div className="flex items-center gap-2 whitespace-nowrap hover:-translate-y-0.5 transition-transform duration-200 ease-out cursor-default">
+              <span className="font-bold text-[22px] text-[#A78BFA] leading-none">{stats.projects}+</span>
+              <span className="text-[#94A3B8] text-[13px] font-normal">Full Stack & AI/ML Projects</span>
+            </div>
+
+            <div className="hidden md:block w-[1px] h-5 bg-white/10 shrink-0" />
+
+            {/* Item 3 */}
+            <div className="flex items-center gap-2 whitespace-nowrap hover:-translate-y-0.5 transition-transform duration-200 ease-out cursor-default">
+              <span className="font-bold text-[22px] text-[#F59E0B] leading-none">{stats.hackathons}+</span>
+              <span className="text-[#94A3B8] text-[13px] font-normal">Hackathon Wins</span>
+            </div>
+
+            <div className="hidden md:block w-[1px] h-5 bg-white/10 shrink-0" />
+
+            {/* Item 4 */}
+            <div className="flex items-center gap-2 whitespace-nowrap hover:-translate-y-0.5 transition-transform duration-200 ease-out cursor-default">
+              <span className="font-bold text-[22px] text-[#F472B6] leading-none">{stats.competitions}+</span>
+              <span className="text-[#94A3B8] text-[13px] font-normal">Competition Wins</span>
+            </div>
+          </div>
+
+          {/* --- EDUCATION CARDS --- */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl mx-auto mb-7 items-stretch animate-slide-up animation-delay-375">
+            {/* Card 1 - Easwari Engineering College */}
+            <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-[24px_28px] min-h-[160px] flex flex-col justify-between hover:border-[#00C9A7]/50 transition-all duration-300 text-left">
+              <div className="flex justify-between items-start gap-4 h-full w-full">
+                <div className="flex flex-col justify-between h-full flex-1">
+                  {/* Header Row */}
+                  <div className="flex items-center gap-4">
+                    {!eecLogoError ? (
+                      <img
+                        src="/logos/eec.png"
+                        alt="Easwari Logo"
+                        className="w-[52px] h-[52px] object-contain rounded-[10px] bg-white/10 p-[6px] shrink-0"
+                        onError={() => setEecLogoError(true)}
+                      />
+                    ) : (
+                      <div className="w-[52px] h-[52px] rounded-full bg-[#00C9A7]/20 text-[#00C9A7] text-[14px] font-bold flex items-center justify-center shrink-0">
+                        EEC
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-[12px] tracking-[0.08em] text-[#94A3B8] font-semibold uppercase leading-none">EASWARI ENGINEERING COLLEGE</p>
+                      <h4 className="font-bold text-[20px] text-white leading-[1.3] mt-1.5">B.E. Computer Science & Engineering</h4>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[13px] font-semibold bg-[#00C9A7]/20 text-[#00C9A7]">
+                      Semester 5 • 2024–2028
                     </span>
                   </div>
-                  <div className="h-11 flex items-center">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 whitespace-nowrap">
-                      Diploma Level
-                    </span>
-                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[12px] text-[#94A3B8] uppercase tracking-wider font-semibold">CGPA</p>
+                  <p className="text-[40px] font-extrabold text-[#00C9A7] leading-none mt-1.5">8.87</p>
                 </div>
               </div>
+            </div>
 
-              {/* 3. CGPA (1 Column) */}
-              <div className="xl:col-span-1 xl:border-r border-white/5 xl:pr-6">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4 font-semibold">CGPA</p>
-                <div className="flex flex-col gap-5">
-                  <div className="h-11 flex items-center">
-                    <span className="font-bold text-2xl gradient-text">8.87</span>
+            {/* Card 2 - IIT Madras */}
+            <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-[24px_28px] min-h-[160px] flex flex-col justify-between hover:border-[#845EF7]/50 transition-all duration-300 text-left">
+              <div className="flex justify-between items-start gap-4 h-full w-full">
+                <div className="flex flex-col justify-between h-full flex-1">
+                  {/* Header Row */}
+                  <div className="flex items-center gap-4">
+                    {!iitmLogoError ? (
+                      <img
+                        src="/logos/iitm.png"
+                        alt="IIT Madras Logo"
+                        className="w-[52px] h-[52px] object-contain rounded-[10px] bg-white/10 p-[6px] shrink-0"
+                        onError={() => setIitmLogoError(true)}
+                      />
+                    ) : (
+                      <div className="w-[52px] h-[52px] rounded-full bg-[#A78BFA]/20 text-[#A78BFA] text-[14px] font-bold flex items-center justify-center shrink-0">
+                        IIT
+                      </div>
+                    )}
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-[12px] tracking-[0.08em] text-[#94A3B8] font-semibold uppercase leading-none">IIT MADRAS</p>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#845EF7]/25 text-[#A78BFA]">
+                          2024–2028
+                        </span>
+                      </div>
+                      <h4 className="font-bold text-[20px] text-white leading-[1.3] mt-1.5">BS Data Science & Applications</h4>
+                    </div>
                   </div>
-                  <div className="h-11 flex items-center">
-                    <span className="font-bold text-2xl text-white/90">7.59</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 4. STATUS (2 Columns) */}
-              <div className="xl:col-span-2 xl:border-r border-white/5 xl:pr-6 flex flex-col h-full">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4 font-semibold">Status</p>
-                <div className="flex-1 flex items-center">
-                  <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-400 px-3 py-1.5 rounded-full text-xs font-medium border border-green-500/20 whitespace-nowrap">
-                    <span className="relative flex h-2 w-2 shrink-0">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    Open to Internships
-                  </div>
-                </div>
-              </div>
-
-              {/* 5. TECH STACK (3 Columns) */}
-              <div className="xl:col-span-3 flex flex-col h-full">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4 font-semibold">Tech Stack</p>
-                <div className="flex-1 flex items-center">
-                  <div className="flex flex-wrap gap-2 content-center">
-                    {techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 rounded bg-secondary/10 border border-secondary/20 text-secondary-foreground text-xs font-medium hover:bg-secondary/20 transition-all cursor-default"
-                      >
-                        {tech}
+                  
+                  {/* Two-row Diploma Tracker */}
+                  <div className="mt-3 flex flex-col gap-[10px]">
+                    {/* Row 1: Completed */}
+                    <div className="flex items-center justify-between text-[14px] max-w-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-4 h-4 rounded-full bg-[#4ADE80] text-black font-extrabold flex items-center justify-center text-[10px] shrink-0">✓</span>
+                        <span className="text-[#4ADE80] font-medium">Diploma in Programming</span>
+                      </div>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#4ADE80]/20 text-[#4ADE80] shrink-0">
+                        Completed
                       </span>
-                    ))}
+                    </div>
+                    
+                    {/* Row 2: In Progress */}
+                    <div className="flex items-center justify-between text-[14px] max-w-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-2 w-2 shrink-0">
+                          <span className="animate-pulse-dot absolute inline-flex h-full w-full rounded-full bg-[#7C3AED]"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#7C3AED]"></span>
+                        </span>
+                        <span className="text-[#A78BFA] font-medium">Diploma in Data Science</span>
+                      </div>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#7C3AED]/20 text-[#A78BFA] shrink-0">
+                        In Progress
+                      </span>
+                    </div>
                   </div>
+                </div>
+                
+                <div className="text-right shrink-0">
+                  <p className="text-[12px] text-[#94A3B8] uppercase tracking-wider font-semibold">CGPA</p>
+                  <p className="text-[40px] font-extrabold text-[#845EF7] leading-none mt-1.5">7.59</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* --- MERGED ACTIONS & STATUS CARD --- */}
+          <div className="w-full max-w-5xl mx-auto mb-6 p-6 md:py-6 md:px-7 bg-black/30 backdrop-blur border border-white/10 rounded-xl flex flex-col items-center justify-center gap-4 animate-slide-up animation-delay-385">
+            {/* Row 1: Action Icon-Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              {/* Resume Button */}
+              <a
+                href="/S_Shriram_Resume.pdf"
+                download="S_Shriram_Resume.pdf"
+                className="bg-gradient-to-r from-[#00C9A7] to-[#845EF7] text-white text-[14px] font-semibold rounded-full py-2.5 px-5 flex items-center gap-2 hover:scale-105 transition-all duration-300 shrink-0"
+                title="Download Resume"
+              >
+                <Download size={16} />
+                <span>Download Resume</span>
+              </a>
+
+              {/* GitHub Button */}
+              <div className="flex flex-col items-center gap-1">
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 border border-white/20 bg-white/5 hover:bg-white/10 hover:border-[#00C9A7]/40 hover:text-[#00C9A7] text-foreground rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                  title="View GitHub Repositories"
+                >
+                   <Github size={15} />
+                 </a>
+                 <span className="text-[11px] text-[#94A3B8] font-medium">GitHub</span>
+               </div>
+     
+               {/* LinkedIn Button */}
+               <div className="flex flex-col items-center gap-1">
+                 <a
+                   href={linkedin}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="p-2.5 border border-white/20 bg-white/5 hover:bg-white/10 hover:border-[#845EF7]/40 hover:text-[#845EF7] text-foreground rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                   title="LinkedIn Profile"
+                 >
+                   <Linkedin size={15} />
+                 </a>
+                 <span className="text-[11px] text-[#94A3B8] font-medium">LinkedIn</span>
+               </div>
+     
+               {/* Contact Button */}
+               <div className="flex flex-col items-center gap-1">
+                 <a
+                   href="#contact"
+                   className="p-2.5 border border-white/20 bg-white/5 hover:bg-white/10 hover:border-[#00C9A7]/40 hover:text-[#00C9A7] text-foreground rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                   title="Contact Me"
+                 >
+                   <Mail size={15} />
+                 </a>
+                  <span className="text-[11px] text-[#94A3B8] font-medium">Contact</span>
                 </div>
               </div>
 
+              {/* Divider Line */}
+              <div className="w-full h-[1px] bg-white/10 my-1" />
+
+            {/* Row 2: Current Focus Dashboard Panel */}
+            <div className="w-full p-4 rounded-xl border border-white/5 border-l-[3px] border-l-[#00C9A7] bg-[#00C9A7]/[0.04] flex flex-col items-center justify-center gap-3.5 mt-1">
+              {/* Header with pulsing green dot */}
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADE80] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ADE80]"></span>
+                </span>
+                <span className="text-[11px] font-bold text-[#00C9A7] uppercase tracking-wider">Current Focus</span>
+              </div>
+
+              {/* Chips row */}
+              <div className="flex flex-wrap justify-center gap-3">
+                {/* AuraMed */}
+                <button
+                  onClick={() => {
+                    const event = new CustomEvent('trigger-project-view', {
+                      detail: { projectId: 'auramed' }
+                    });
+                    window.dispatchEvent(event);
+                  }}
+                  className="inline-flex items-center gap-2 rounded-[20px] border hover:border-[#00C9A7]/40 hover:bg-white/[0.1] text-white text-[14px] font-semibold whitespace-nowrap hover:scale-105 transition-all duration-200 cursor-pointer"
+                  style={{
+                    padding: '10px 18px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    borderColor: 'rgba(255, 255, 255, 0.12)',
+                    boxShadow: '0 0 12px rgba(0, 201, 167, 0.2)'
+                  }}
+                  title="View AuraMed Project details"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C9A7] shadow-[0_0_8px_#00C9A7] shrink-0" />
+                  <span className="font-bold text-white">AuraMed</span>
+                  <span className="text-[12.5px] text-[#4ADE80] font-normal italic ml-0.5">· Upgrading</span>
+                </button>
+
+                {/* Enterprise Knowledge Platform */}
+                <span
+                  className="inline-flex items-center gap-2 rounded-[20px] border hover:border-[#F59E0B]/40 hover:bg-white/[0.1] text-white text-[14px] font-semibold whitespace-nowrap transition-all duration-200"
+                  style={{
+                    padding: '10px 18px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    borderColor: 'rgba(255, 255, 255, 0.12)'
+                  }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B] shadow-[0_0_8px_#F59E0B] shrink-0 animate-pulse" />
+                  <span className="font-bold text-white">Enterprise Knowledge Platform</span>
+                  <span className="text-[12.5px] text-[#FCD34D] font-normal italic ml-0.5">· Building from scratch</span>
+                </span>
+
+                {/* IITM BS Data Science Track */}
+                <a
+                  href="#education"
+                  className="inline-flex items-center gap-2 rounded-[20px] border hover:border-[#A78BFA]/40 hover:bg-white/[0.1] text-white text-[14px] font-semibold whitespace-nowrap hover:scale-105 transition-all duration-200"
+                  style={{
+                    padding: '10px 18px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    borderColor: 'rgba(255, 255, 255, 0.12)'
+                  }}
+                  title="Scroll to Academic Journey"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#A78BFA] shadow-[0_0_8px_#A78BFA] shrink-0" />
+                  <span className="font-bold text-white">IITM BS Data Science Track</span>
+                  <span className="text-[12.5px] text-[#C4B5FD] font-normal italic ml-0.5">· Ongoing</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

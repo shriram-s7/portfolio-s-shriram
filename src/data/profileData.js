@@ -1,7 +1,7 @@
 export const profileData = {
     name: "S Shriram",
-    role: "Full Stack Developer | Data Science Enthusiast",
-    summary: "Engineering student passionate about building real-time, AI-driven systems using modern technologies.",
+    role: "Computer Science Engineer | Full Stack & AI/ML Developer",
+    summary: "Building scalable Full Stack, AI/ML and Data-Driven applications focused on solving real-world engineering problems.",
     location: "Chennai, India",
     email: "shriram0981234@gmail.com",
     github: "https://github.com/shriram-s8",

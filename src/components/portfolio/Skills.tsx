@@ -1,8 +1,22 @@
-import { Code, Globe, Brain, Wrench } from 'lucide-react';
+import { 
+  Code, 
+  Globe, 
+  Brain, 
+  Wrench, 
+  Coffee, 
+  Terminal, 
+  Server, 
+  Database, 
+  Network, 
+  Zap, 
+  GitBranch, 
+  Eye, 
+  Target 
+} from 'lucide-react';
 
 import { skillsData } from '../../data/skillsData';
 
-// Icon mapping
+// Icon mapping for categories
 const iconMap: { [key: string]: React.ElementType } = {
   Code,
   Globe,
@@ -14,6 +28,63 @@ const skillCategories = skillsData.map((category: any) => ({
   ...category,
   icon: iconMap[category.icon] || Code // Fallback
 }));
+
+// Skill-specific icons and colors configuration
+interface SkillIconConfig {
+  icon: React.ElementType;
+  colorClass: string;
+}
+
+const skillIconMap: { [key: string]: SkillIconConfig } = {
+  'Python': { icon: Code, colorClass: 'text-yellow-400' },
+  'Java': { icon: Coffee, colorClass: 'text-orange-400' },
+  'C': { icon: Terminal, colorClass: 'text-blue-400' },
+  'HTML/CSS/JS': { icon: Globe, colorClass: 'text-orange-400' },
+  'Flask': { icon: Server, colorClass: 'text-gray-300' },
+  'MySQL/SQLite': { icon: Database, colorClass: 'text-blue-400' },
+  'Machine Learning': { icon: Brain, colorClass: 'text-purple-400' },
+  'LSTM / NLP': { icon: Network, colorClass: 'text-purple-400' },
+  'Automation': { icon: Zap, colorClass: 'text-yellow-400' },
+  'Git & GitHub': { icon: GitBranch, colorClass: 'text-orange-400' },
+  'OpenCV': { icon: Eye, colorClass: 'text-cyan-400' },
+  'YOLOv8': { icon: Target, colorClass: 'text-cyan-400' }
+};
+
+const getSkillIconConfig = (name: string): SkillIconConfig => {
+  return skillIconMap[name] || { icon: Code, colorClass: 'text-gray-400' };
+};
+
+const getProficiency = (level: number) => {
+  if (level >= 80) return 'Advanced';
+  if (level >= 60) return 'Intermediate';
+  return 'Basic';
+};
+
+const getBarFillClass = (proficiency: string) => {
+  switch (proficiency) {
+    case 'Advanced':
+      return 'skill-bar-fill'; // Keep existing cyan-to-purple gradient (hero color)
+    case 'Intermediate':
+      return 'h-full rounded-full bg-gradient-to-r from-[#3B82F6] to-[#00C9A7]'; // Catchy Blue to Teal gradient
+    case 'Basic':
+    case 'Beginner':
+    default:
+      return 'h-full rounded-full bg-gradient-to-r from-[#475569] to-[#64748B]'; // Catchy Slate-600 to Slate-500 gradient
+  }
+};
+
+const getLabelClass = (proficiency: string) => {
+  switch (proficiency) {
+    case 'Advanced':
+      return 'text-[#00C9A7] font-semibold text-xs';
+    case 'Intermediate':
+      return 'text-[#3B82F6] font-semibold text-xs';
+    case 'Basic':
+    case 'Beginner':
+    default:
+      return 'text-[#64748b] font-medium text-xs';
+  }
+};
 
 const Skills = () => {
   return (
@@ -45,22 +116,31 @@ const Skills = () => {
               </div>
 
               <div className="space-y-4">
-                {category.skills.map((skill) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm text-foreground">{skill.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {skill.level >= 80 ? 'Advanced' : 'Intermediate'}
-                      </span>
+                {category.skills.map((skill) => {
+                  const proficiency = getProficiency(skill.level);
+                  const iconConfig = getSkillIconConfig(skill.name);
+                  const SkillIcon = iconConfig.icon;
+
+                  return (
+                    <div key={skill.name} className="group">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center gap-2">
+                          <SkillIcon className={`w-[18px] h-[18px] ${iconConfig.colorClass} opacity-70 group-hover:opacity-100 transition-opacity duration-200`} />
+                          <span className="text-sm text-foreground font-medium group-hover:text-white transition-colors duration-200">{skill.name}</span>
+                        </div>
+                        <span className={getLabelClass(proficiency)}>
+                          {proficiency}
+                        </span>
+                      </div>
+                      <div className="skill-bar">
+                        <div
+                          className={`${getBarFillClass(proficiency)} transition-all duration-1000 ease-out`}
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="skill-bar">
-                      <div
-                        className="skill-bar-fill transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}

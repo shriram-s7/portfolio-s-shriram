@@ -12,10 +12,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>S Shriram | Full Stack Developer & Data Science Enthusiast</title>
-        <meta name="description" content="Portfolio of S Shriram - Engineering student passionate about building real-time, AI-driven systems. Full Stack Developer specializing in Python, Java, Flask, and Machine Learning." />
-        <meta name="keywords" content="S Shriram, Full Stack Developer, Data Science, Machine Learning, Python, Java, Flask, Portfolio" />
-        <meta property="og:title" content="S Shriram | Full Stack Developer & Data Science Enthusiast" />
+        <title>S Shriram | Computer Science Engineer & AI/ML Developer</title>
+        <meta name="description" content="Portfolio of S Shriram - Computer Science Engineer, IITM BS Data Science Student, and Full Stack & AI/ML Developer passionate about building real-time, AI-driven systems." />
+        <meta name="keywords" content="S Shriram, Computer Science Engineer, IIT Madras, IITM, BS Data Science, Full Stack Developer, AI/ML Developer, Machine Learning, Python, Portfolio" />
+        <meta property="og:title" content="S Shriram | Computer Science Engineer & AI/ML Developer" />
         <meta property="og:description" content="Engineering student passionate about building real-time, AI-driven systems using modern technologies." />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://sshriram.dev" />

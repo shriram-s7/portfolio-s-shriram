@@ -108,31 +108,34 @@ const TechCompanion = () => {
         </g>
 
         {/* Mouth */}
-        {/* Hover state mouth (Priority 1) */}
-        <path 
-          d="M40 68 Q50 76 60 68" 
-          stroke="#2dd4bf" 
-          strokeWidth="3" 
-          strokeLinecap="round" 
-          fill="none" 
-          className={`drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] transition-opacity duration-300 pointer-events-none ${
-            isHovering ? 'opacity-100' : 'opacity-0'
-          }`} 
-        />
-
-        {/* Idle/Default state mouth (Priority 2) */}
-        <line 
-          x1="42" 
-          y1="70" 
-          x2="58" 
-          y2="70" 
-          stroke="#2dd4bf" 
-          strokeWidth="3" 
-          strokeLinecap="round" 
-          className={`drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] transition-opacity duration-300 pointer-events-none ${
-            !isHovering ? 'opacity-100' : 'opacity-0'
-          }`} 
-        />
+        {isClicked ? (
+          <ellipse 
+            cx="50" 
+            cy="71" 
+            rx="5" 
+            ry="6" 
+            fill="#2dd4bf" 
+            className="animate-pulse" 
+          />
+        ) : isHovering ? (
+          <path 
+            d="M40 69 Q50 78 60 69" 
+            stroke="#2dd4bf" 
+            strokeWidth="3" 
+            strokeLinecap="round" 
+            fill="none" 
+            className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]"
+          />
+        ) : (
+          <path 
+            d="M44 71 Q50 73 56 71" 
+            stroke="#2dd4bf" 
+            strokeWidth="3" 
+            strokeLinecap="round" 
+            fill="none" 
+            className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]"
+          />
+        )}
 
         {/* Feet */}
         <path d="M30 93 L30 100" stroke="#2dd4bf" strokeWidth="5" strokeLinecap="round" />

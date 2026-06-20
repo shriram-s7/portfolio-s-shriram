@@ -30,9 +30,9 @@ const educationData: EducationItem[] = [
       "Leading a team for the Smart India Hackathon internal rounds."
     ],
     icon: GraduationCap,
-    color: 'text-blue-400',
+    color: 'text-blue-300',
     logo: '/logos/eec.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.6)] hover:border-blue-400',
+    glow: 'hover:border-blue-400',
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const educationData: EducationItem[] = [
     icon: Award,
     color: 'text-emerald-400',
     logo: '/logos/iitm.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(52,211,153,0.6)] hover:border-emerald-400',
+    glow: 'hover:border-emerald-400',
   },
   {
     id: 2,
@@ -66,9 +66,9 @@ const educationData: EducationItem[] = [
       "Collaborated with peers from across India on group projects."
     ],
     icon: BookOpen,
-    color: 'text-purple-400',
+    color: 'text-purple-300',
     logo: '/logos/iitm.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(192,132,252,0.6)] hover:border-purple-400',
+    glow: 'hover:border-purple-400',
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const educationData: EducationItem[] = [
     icon: Award,
     color: 'text-emerald-400',
     logo: '/logos/iitm.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(52,211,153,0.6)] hover:border-emerald-400',
+    glow: 'hover:border-emerald-400',
   },
   {
     id: 4,
@@ -102,9 +102,9 @@ const educationData: EducationItem[] = [
       "Won medals in inter-school Maths olympiads and quizzes."
     ],
     icon: Star,
-    color: 'text-blue-400',
+    color: 'text-blue-300',
     logo: '/logos/school.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.6)] hover:border-blue-400',
+    glow: 'hover:border-blue-400',
   },
   {
     id: 5,
@@ -122,7 +122,7 @@ const educationData: EducationItem[] = [
     icon: Star,
     color: 'text-orange-400',
     logo: '/logos/school.png',
-    glow: 'hover:shadow-[0_0_60px_-10px_rgba(251,146,60,0.6)] hover:border-orange-400',
+    glow: 'hover:border-orange-400',
   },
 ];
 
@@ -161,8 +161,8 @@ const TiltCard = ({ children, className, onClick }: any) => {
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`group relative rounded-xl border border-white/5 bg-white/5 
-        hover:bg-[#020617] hover:border-opacity-100 hover:z-30
+      className={`group relative rounded-xl border border-[#334155] bg-[#1E293B] 
+        hover:bg-[#1E293B] hover:z-30
         cursor-pointer ${className}`}
       style={style}
     >
@@ -221,26 +221,26 @@ const Education = () => {
 
                 <div className="flex-1 order-2 md:order-1 relative z-10">
                   <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <span className="text-xs font-mono text-muted-foreground bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
+                    <span className="text-xs font-mono text-[#E2E8F0] bg-white/10 px-2.5 py-1 rounded-full flex items-center gap-1.5">
                       <Calendar size={12} />
                       {edu.year}
                     </span>
                     {edu.score && (
-                      <span className={`text-xs font-bold ${edu.color} bg-white/5 px-2.5 py-1 rounded-full border border-white/5`}>
+                      <span className={`text-xs font-bold ${edu.color} bg-white/10 px-2.5 py-1 rounded-full`}>
                         {edu.score}
                       </span>
                     )}
                   </div>
 
                   {/* Increased Font Size */}
-                  <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-white transition-colors">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-white transition-colors">
                     {edu.degree}
                   </h3>
-                  <p className="text-base font-medium text-muted-foreground mb-4">
+                  <p className="text-base font-medium text-[#94A3B8] mb-4">
                     {edu.institution}
                   </p>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                  <p className="text-sm text-[#E2E8F0] leading-relaxed line-clamp-2">
                     {edu.description}
                   </p>
 
@@ -250,7 +250,7 @@ const Education = () => {
                 </div>
 
                 <div className="order-1 md:order-2 shrink-0 relative z-10">
-                  <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl ${edu.color} flex items-center justify-center p-4 bg-white/5 border border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl ${edu.color} flex items-center justify-center p-4 bg-white/5 border border-[#334155] group-hover:scale-110 transition-transform duration-300`}>
                     {edu.logo ? (
                       <img
                         src={edu.logo}
