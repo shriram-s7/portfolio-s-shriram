@@ -104,7 +104,7 @@ const Projects = () => {
 
         // 3. Auto-open Modal after 1 second
         setTimeout(() => {
-          const projectToOpen = projects.find(p => p.id === projectId);
+          const projectToOpen = projects.find(p => String(p.id) === String(projectId));
           if (projectToOpen) {
             setSelectedProject(projectToOpen);
           }
@@ -142,7 +142,7 @@ const Projects = () => {
             <div
               key={project.id}
               id={`project-card-${project.id}`}
-              className={`animate-slide-up transition-all duration-500 ${highlightedProjectId === project.id ? 'ring-2 ring-primary scale-105 z-40' : ''}`}
+              className={`animate-slide-up transition-all duration-500 ${highlightedProjectId !== null && String(highlightedProjectId) === String(project.id) ? 'ring-2 ring-primary scale-105 z-40' : ''}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <TiltCard

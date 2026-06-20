@@ -9,8 +9,8 @@ export const projectsData = [
             "Built a high-performance backend serving transformer inference with low latency to support interactive diagnostic tools."
         ],
         tech: ["Python", "PyTorch", "FastAPI", "ViT", "Grad-CAM"],
-        githubUrl: "#",
-        demoUrl: "#",
+        githubUrl: "https://github.com/shriram-s8/AURAMED-NEW-FRONTEND.git",
+        demoUrl: "https://youtu.be/VDGofKZ1XwU",
         icon: "HeartPulse",
         color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
         neon: "hover:shadow-[0_0_50px_-10px_rgba(6,182,212,0.6)] hover:border-cyan-400",
@@ -26,8 +26,8 @@ export const projectsData = [
             "Integrated simulation layers for traffic congestion and rain impact to test system responsiveness under dynamic operational conditions."
         ],
         tech: ['Python', 'FastAPI', 'OpenStreetMap', 'WebSockets', 'OR-Tools'],
-        githubUrl: 'https://github.com/shriram-s7/AIML-BASED-REALTIME-ROUTE-OPTIMIZATION-SYSTEM-FOR-TRANSPORTATION-AND-LOGISTICS.git',
-        demoUrl: 'https://youtu.be/tV15URh2RAA',
+        githubUrl: 'https://github.com/shriram-s8/DYNAMIC-ROUTE-OPTIMIZATION-SYSTEM.git',
+        demoUrl: 'https://youtu.be/uunL2gQFaAw',
         icon: 'Car',
         color: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
         neon: 'hover:shadow-[0_0_50px_-10px_rgba(251,146,60,0.6)] hover:border-orange-400',
@@ -44,7 +44,7 @@ export const projectsData = [
             "Built an interactive decision-support prototype enabling administrators to inspect district rankings, pressure drivers, and recommended operational actions."
         ],
         tech: ['Python', 'Pandas', 'Streamlit', 'Data Engineering', 'Governance Analytics'],
-        githubUrl: 'https://github.com/shriram-s7/UIDAI-DATA-HACKATHON.git',
+        githubUrl: 'https://github.com/shriram-s8/AADHAAR-PRESSURE-UPDATE-INTELLIGENCE-SYSTEM.git',
         demoUrl: 'https://youtu.be/P_dZWWPQM_c',
         icon: 'Activity',
         color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
@@ -60,7 +60,7 @@ export const projectsData = [
             "Implemented dynamic signal timing adjustments to reduce average wait times and fuel consumption."
         ],
         tech: ['Python', 'YOLOv8', 'OpenCV', 'LSTM', 'Flask'],
-        githubUrl: 'https://github.com/shriram-s7/SMART-TRAFFIC-MANAGEMENT-SYSTEM.git',
+        githubUrl: 'https://github.com/shriram-s8',
         demoUrl: 'https://youtu.be/sAb1IaTKYYg',
         icon: 'Car',
         color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
@@ -76,7 +76,7 @@ export const projectsData = [
             "Visualized suspect communication networks using NetworkX to identify key connections and hierarchies."
         ],
         tech: ['Python', 'NLP', 'NetworkX', 'Pandas', 'Data Viz'],
-        githubUrl: 'https://github.com/shriram-s7/UFDR-Analysis-Tool-Project.git',
+        githubUrl: 'https://github.com/shriram-s8/UFDR-ANALYZER-TOOL.git',
         demoUrl: 'https://youtu.be/Ydn5dh8-xas',
         icon: 'Search',
         color: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
@@ -92,7 +92,7 @@ export const projectsData = [
             "Integrated a MySQL database to securely handle bookings, user profiles, and show timings."
         ],
         tech: ['Java', 'Swing', 'JDBC', 'MySQL', 'AWT'],
-        githubUrl: 'https://github.com/shriram-s7/JAVA-PROJECT---MOVIE-TICKET-BOOKING-SYSTEM.git',
+        githubUrl: 'https://github.com/shriram-s8/MOVIE-TICKET-BOOKING-SYSTEM-JAVA.git',
         demoUrl: 'https://youtu.be/FnWqxZYr6aU',
         icon: 'Film',
         color: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
@@ -108,7 +108,7 @@ export const projectsData = [
             "Managed complex medical records and prescription history using a robust relational database architecture."
         ],
         tech: ['Web Dev', 'Database', 'Management'],
-        githubUrl: 'https://github.com/shriram-s7/HOSPITAL-MANAGEMENT-APPLICATION-LOCAL-SERVER-.git',
+        githubUrl: 'https://github.com/shriram-s8/HOSPITAL-MANAGEMENT-SYSTEM-V2-WITH-VUE.git',
         demoUrl: 'https://youtu.be/ing8-6VmQz0',
         icon: 'Activity',
         color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',

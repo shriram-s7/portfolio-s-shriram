@@ -4,6 +4,7 @@ const TechCompanion = () => {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
 
   const botRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +30,26 @@ const TechCompanion = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Blink logic
+  useEffect(() => {
+    if (isHovering) return;
+    let timeoutId: NodeJS.Timeout;
+
+    const scheduleBlink = () => {
+      const delay = 4000 + Math.random() * 2000; // 4-6 seconds
+      timeoutId = setTimeout(() => {
+        setIsBlinking(true);
+        setTimeout(() => {
+          setIsBlinking(false);
+          scheduleBlink();
+        }, 150); // 150ms blink duration
+      }, delay);
+    };
+
+    scheduleBlink();
+    return () => clearTimeout(timeoutId);
+  }, [isHovering]);
 
   const handleClick = () => {
     setIsClicked(true);
@@ -61,37 +82,61 @@ const TechCompanion = () => {
         <circle cx="50" cy="5" r="5" fill="#a855f7" className="animate-pulse" />
 
         {/* Head/Chassis */}
-        <rect x="15" y="25" width="70" height="55" rx="14" fill="#0f172a" stroke="#2dd4bf" strokeWidth="3" />
+        <rect x="15" y="25" width="70" height="68" rx="14" fill="#0f172a" stroke="#2dd4bf" strokeWidth="3" />
 
         {/* Face Screen (Darker Background) */}
-        <rect x="25" y="38" width="50" height="28" rx="8" fill="#020617" />
+        <rect x="25" y="38" width="50" height="40" rx="8" fill="#020617" />
 
         {/* --- STATIC EYE SOCKETS (The "Whites" of the eyes) --- */}
-        {/* This creates the reference point so movement is obvious */}
-        <circle cx="38" cy="52" r="10" fill="#1e293b" stroke="#334155" strokeWidth="1" />
-        <circle cx="62" cy="52" r="10" fill="#1e293b" stroke="#334155" strokeWidth="1" />
+        <circle cx="38" cy="50" r="10" fill="#1e293b" stroke="#334155" strokeWidth="1" />
+        <circle cx="62" cy="50" r="10" fill="#1e293b" stroke="#334155" strokeWidth="1" />
 
         {/* --- MOVING PUPILS --- */}
-        <g transform={`translate(${eyePosition.x}, ${eyePosition.y})`}>
+        <g 
+          style={{
+            transformOrigin: '50px 50px',
+            transform: `translate(${eyePosition.x}px, ${eyePosition.y}px) scaleY(${isBlinking ? 0.1 : 1})`,
+          }}
+        >
           {/* Smaller, brighter pupils for contrast */}
-          <circle cx="38" cy="52" r="4" fill="#2dd4bf" className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]" />
-          <circle cx="62" cy="52" r="4" fill="#2dd4bf" className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]" />
+          <circle cx="38" cy="50" r="4" fill="#2dd4bf" className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]" />
+          <circle cx="62" cy="50" r="4" fill="#2dd4bf" className="drop-shadow-[0_0_5px_rgba(45,212,191,0.8)]" />
 
           {/* Tiny reflection dot for "glossy" look */}
-          <circle cx="40" cy="50" r="1.5" fill="white" opacity="0.8" />
-          <circle cx="64" cy="50" r="1.5" fill="white" opacity="0.8" />
+          <circle cx="40" cy="48" r="1.5" fill="white" opacity="0.8" />
+          <circle cx="64" cy="48" r="1.5" fill="white" opacity="0.8" />
         </g>
 
         {/* Mouth */}
-        {isHovering ? (
-          <path d="M40 78 Q50 88 60 78" stroke="#2dd4bf" strokeWidth="3" strokeLinecap="round" fill="none" />
-        ) : (
-          <line x1="42" y1="82" x2="58" y2="82" stroke="#2dd4bf" strokeWidth="3" strokeLinecap="round" />
-        )}
+        {/* Hover state mouth (Priority 1) */}
+        <path 
+          d="M40 68 Q50 76 60 68" 
+          stroke="#2dd4bf" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          fill="none" 
+          className={`drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] transition-opacity duration-300 pointer-events-none ${
+            isHovering ? 'opacity-100' : 'opacity-0'
+          }`} 
+        />
+
+        {/* Idle/Default state mouth (Priority 2) */}
+        <line 
+          x1="42" 
+          y1="70" 
+          x2="58" 
+          y2="70" 
+          stroke="#2dd4bf" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          className={`drop-shadow-[0_0_5px_rgba(45,212,191,0.8)] transition-opacity duration-300 pointer-events-none ${
+            !isHovering ? 'opacity-100' : 'opacity-0'
+          }`} 
+        />
 
         {/* Feet */}
-        <path d="M30 85 L30 92" stroke="#2dd4bf" strokeWidth="5" strokeLinecap="round" />
-        <path d="M70 85 L70 92" stroke="#2dd4bf" strokeWidth="5" strokeLinecap="round" />
+        <path d="M30 93 L30 100" stroke="#2dd4bf" strokeWidth="5" strokeLinecap="round" />
+        <path d="M70 93 L70 100" stroke="#2dd4bf" strokeWidth="5" strokeLinecap="round" />
       </svg>
     </div>
   );

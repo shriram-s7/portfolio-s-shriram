@@ -3,9 +3,9 @@ export const profileData = {
     role: "Full Stack Developer | Data Science Enthusiast",
     summary: "Engineering student passionate about building real-time, AI-driven systems using modern technologies.",
     location: "Chennai, India",
-    email: "shriram.s7@gmail.com", // Assuming based on previous context or add placeholder
-    github: "https://github.com/shriram-s7", // Assuming based on previous context
-    linkedin: "https://linkedin.com/in/shriram-s", // Placeholder, update if known
+    email: "shriram0981234@gmail.com",
+    github: "https://github.com/shriram-s8",
+    linkedin: "https://www.linkedin.com/in/shriram-s-546a2935a/",
     focusAreas: [
         "Full Stack Development",
         "Data Science",

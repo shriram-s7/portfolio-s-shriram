@@ -30,7 +30,7 @@ const socialLinks = [
   {
     icon: Github,
     label: 'GitHub',
-    href: 'https://github.com/shriram-s7',
+    href: 'https://github.com/shriram-s8',
   },
 ];
 
@@ -114,7 +114,7 @@ const Contact = () => {
                     {/* Real Download Button */}
                     <a 
                       href="/S_Shriram_Resume.pdf" 
-                      download
+                      download="S_Shriram_Resume.pdf"
                       className="btn-primary"
                     >
                       <Download size={18} />
