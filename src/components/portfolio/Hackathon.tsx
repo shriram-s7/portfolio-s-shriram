@@ -132,7 +132,7 @@ const Hackathon = () => {
                                         </div>
                                     )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                                    <div className="absolute top-4 left-4 bg-yellow-500/20 backdrop-blur-md border border-yellow-500/50 text-yellow-400 px-4 py-1.5 rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.3)] z-10">
+                                    <div className="absolute top-4 left-4 bg-black/85 backdrop-blur-md border border-amber-500/40 text-amber-400 px-4 py-1.5 rounded-full flex items-center gap-2 shadow-lg shadow-amber-500/20 z-10">
                                         <Trophy size={14} fill="currentColor" />
                                         <span className="font-bold text-xs uppercase tracking-wider">{hackathon.achievement}</span>
                                     </div>
