@@ -104,11 +104,18 @@ const Navbar = () => {
               </a>
             ))}
 
-            {/* Mobile Resume Button - REDIRECTS BELOW */}
+            {/* Mobile Resume Button */}
             <a
               href="#contact"
               className="btn-primary text-sm py-3 justify-center mt-2 flex items-center gap-2"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                window.scrollTo({
+                  top: document.documentElement.scrollHeight,
+                  behavior: 'smooth'
+                });
+              }}
             >
               <Download size={16} />
               Resume

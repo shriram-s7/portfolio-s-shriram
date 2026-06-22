@@ -131,7 +131,15 @@ const HelperAIChat = () => {
                             </p>
                         </div>
                     </div>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-white/50 hover:text-white hover:bg-white/10" onClick={() => setIsOpen(false)}>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-white/50 hover:text-white hover:bg-white/10"
+                        onClick={() => {
+                            setIsOpen(false);
+                            window.dispatchEvent(new Event('close-chat'));
+                        }}
+                    >
                         <X size={18} />
                     </Button>
                 </div>

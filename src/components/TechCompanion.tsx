@@ -5,8 +5,22 @@ const TechCompanion = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const botRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOpen = () => setIsChatOpen(true);
+    const handleClose = () => setIsChatOpen(false);
+
+    window.addEventListener('open-chat', handleOpen);
+    window.addEventListener('close-chat', handleClose);
+
+    return () => {
+      window.removeEventListener('open-chat', handleOpen);
+      window.removeEventListener('close-chat', handleClose);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -57,12 +71,21 @@ const TechCompanion = () => {
     window.dispatchEvent(new Event('open-chat'));
   };
 
+  const scaleClass = isChatOpen
+    ? (isHovering ? 'scale-95 md:scale-110' : 'scale-95 md:scale-100')
+    : (isHovering ? 'scale-110' : 'scale-100');
+
+  const visibilityClass = isChatOpen
+    ? 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto'
+    : 'opacity-100 pointer-events-auto';
+
   return (
     <div
       ref={botRef}
-      className={`fixed bottom-12 right-12 z-50 transition-transform duration-300 ease-in-out cursor-pointer
-        ${isHovering ? 'scale-110' : 'scale-100'} 
+      className={`fixed bottom-12 right-12 z-50 transition-all duration-300 ease-in-out cursor-pointer
+        ${scaleClass} 
         ${isClicked ? 'animate-spin-fast' : 'animate-float'}
+        ${visibilityClass}
       `}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
