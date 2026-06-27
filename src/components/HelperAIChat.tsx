@@ -90,11 +90,13 @@ const HelperAIChat = () => {
                 }
 
             } else {
-                setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now. Please try again later." }]);
+                const errorMessage = data?.message || data?.error || "Sorry, I'm having trouble connecting right now. Please try again later.";
+                setMessages(prev => [...prev, { role: 'assistant', content: `Chat Error: ${errorMessage}` }]);
             }
         } catch (error) {
             console.error('Chat Error:', error);
-            setMessages(prev => [...prev, { role: 'assistant', content: "Network error. Please check your connection." }]);
+            const errMsg = error instanceof Error ? error.message : String(error);
+            setMessages(prev => [...prev, { role: 'assistant', content: `Network error: ${errMsg}` }]);
         } finally {
             setIsLoading(false);
         }
